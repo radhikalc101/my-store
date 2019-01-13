@@ -1,0 +1,78 @@
+body {
+    font-family: sans-serif;
+    color: mediumseagreen;
+    background-image: url("../images/background.jpg");
+}
+
+.error{
+    color:red
+}
+.pwd{
+    margin-top:20px;
+    color: lightgray;
+}
+.signup{
+    margin-left: 43%;
+    background-color:mediumseagreen;
+    margin-bottom: 2rem;
+}
+.leftControl {
+    width: 45%;
+    float: left;
+    margin-bottom: 1rem;
+}
+hr {
+    color: #c8c8c8;
+}
+.rightControl {
+    width: 45%;
+    float: right;
+    margin-bottom: 1rem;
+}
+.form-group {
+    margin-bottom: 1rem;
+    display:flow-root;
+}
+.leftCon {
+    width: 25%;
+    float: left;
+    margin-bottom: 1rem;
+}
+.middleCon {
+   margin-left:35%:
+    margin-bottom: 1rem;
+}
+.rightCon {
+    width: 25%;
+    float: right;
+    margin-bottom: 1rem;
+}
+/*.navbar1 {
+    background-color: #f1f1f1;
+      padding: 40px;
+      text-align: left;
+}*/
+.navbar1 {
+    margin-top:2%;
+    width: 80%;
+    background-color: #c8c8c8;
+    box-sizing: border-box;
+    padding: 10px;
+    color: #af4800;
+
+}
+.logout{
+    margin-top:2%;
+    float:right;
+    width:20%;
+    padding-left:10px;
+
+}
+.storeDetails{
+    float:left;
+    width:45%;
+}
+.ownerDetails{
+    float:right;
+     width:45%;
+}
