@@ -13,9 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -119,11 +122,17 @@ public class StoreController {
             model.addAttribute("store", session.getAttribute("store"));
             //session.removeAttribute("store");
             model.addAttribute("user", session.getAttribute("user"));
-            return "store/store_items";//rendering to template giving the path login.html file in the user directory
+            return "store/store_items";//rendering to template giving the path store_items.html file in the user directory
         } else {
             return "redirect:/store/logout";
         }
 
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "data", method = RequestMethod.GET, produces = "application/json")
+    public Iterable<StoreInfo> data() {
+        return storeInfoDao.findAll();
     }
 
 }

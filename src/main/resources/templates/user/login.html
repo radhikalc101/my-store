@@ -6,21 +6,31 @@
 </head>
 <body class="container">
 <nav th:replace="fragments :: navigation"></nav>
-<form method="post" style="max-width:500px;">
+<form id="form1" method="post" style="max-width:500px;">
+
+        <!--<label th:for="email">Email</label>-->
+        <!--<input class="form-control" name="email" type="email" required/>-->
     <div class="form-group">
-        <label th:for="email">Email</label>
-        <input class="form-control" name="email" type="email" required/>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input type="email" class="form-control" name="email" placeholder="Email" required/>
+        </div>
     </div>
     <div class="form-group">
-        <label th:for="password">Password</label>
-        <input class="form-control" name="password" type="password" required/>
+        <!--<label th:for="password">Password</label>-->
+        <!--<input class="form-control" name="password" type="password" required/>-->
+
+    <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <input type="password" class="form-control" name="password" placeholder="Password" required/>
     </div>
+    </div>
+
     <div class="form-group">
         <input type="checkbox"/>
         <label th:for="remember-me">Remember Me</label>
+        <button type="submit" class="btn btn-primary" style="float:right"><i class="glyphicon glyphicon-log-in"></i> Log In</button>
     </div>
-    <input type="submit" class="signin" value="SignIn"/>
-
     <div class="pwd">
         <a href="/store/forgotpwd">Forgot Password? |</a>
         <a href="/store/signup">Sign Up</a>
