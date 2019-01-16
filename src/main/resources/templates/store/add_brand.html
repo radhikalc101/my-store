@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://>www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body class="container">
+<nav th:replace="fragments :: navigation"></nav>
+<h3>Brand</h3>
+<form method="post" th:object="${brand}">
+    <div class="form-group">
+        <label th:for="name">Name</label>
+        <input class="form-control" th:field="*{name}"/>
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Add"/>
+    <a href="/store/list" style="margin-left:20px;">Cancel</a>
+</form>
+<div style="margin-top:15px;">
+    <!--<p th:unless="${brands} and ${brands.size()}">No Brand Added</p>-->
+    <ul >
+        <li th:each="brand : ${brands}">
+            <label th:text="${brand.name}"></label>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

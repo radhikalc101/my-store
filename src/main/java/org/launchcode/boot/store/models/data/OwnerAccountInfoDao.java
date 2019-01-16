@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 
 @Repository
 @Transactional
-public interface ownerAccountInfoDao extends CrudRepository<OwnerAccountInfo, Integer> {
+public interface OwnerAccountInfoDao extends CrudRepository<OwnerAccountInfo, Integer> {
     OwnerAccountInfo findByEmail(String email);// here OwnerAccountInfo class has the same name email field so we have to use
                                                 // same data type here as field data type
 }

@@ -1,9 +1,9 @@
 package org.launchcode.boot.store.controllers;
 
 
-import org.launchcode.boot.store.models.data.addressDao;
-import org.launchcode.boot.store.models.data.ownerAccountInfoDao;
-import org.launchcode.boot.store.models.data.storeInfoDao;
+import org.launchcode.boot.store.models.data.AddressDao;
+import org.launchcode.boot.store.models.data.OwnerAccountInfoDao;
+import org.launchcode.boot.store.models.data.StoreInfoDao;
 import org.launchcode.boot.store.models.forms.Address;
 import org.launchcode.boot.store.models.forms.OwnerAccountInfo;
 import org.launchcode.boot.store.models.forms.StoreInfo;
@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Controller
@@ -26,13 +24,13 @@ import java.util.List;
 public class StoreController {
 
     @Autowired
-    private storeInfoDao storeInfoDao;
+    private StoreInfoDao storeInfoDao;
 
     @Autowired
-    private ownerAccountInfoDao ownerAccountInfoDao;
+    private OwnerAccountInfoDao ownerAccountInfoDao;
 
     @Autowired
-    private addressDao addressDao;
+    private AddressDao addressDao;
 
     @RequestMapping(value = "")
     public String index(Model model, HttpSession session){
