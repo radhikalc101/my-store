@@ -1,10 +1,10 @@
 package org.launchcode.boot.store.models.forms;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Brand {
@@ -15,6 +15,10 @@ public class Brand {
 
     @NotNull
     private String name;
+
+    @OneToMany
+    @JoinColumn(name="brand_id")
+    private List<Item> items = new ArrayList<>();
 
     public Brand(){}
     public Brand(String name){
@@ -30,5 +34,13 @@ public class Brand {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

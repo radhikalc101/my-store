@@ -1,10 +1,10 @@
 package org.launchcode.boot.store.models.forms;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -16,6 +16,10 @@ public class Category {
     @NotNull
     @Size(min=1,max=20)
     private String name;
+
+    @OneToMany
+    @JoinColumn(name="category_id")
+    private List<Item> items = new ArrayList<>();
 
     // default and with field constructor
     public Category(){}
@@ -33,5 +37,13 @@ public class Category {
     }
     public void setName(String name){
         this.name = name;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://>www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body class="container">
+<nav th:replace="fragments :: navigation"></nav>
+<h3>Add Item</h3>
+<form method="post" style="max-width:600px;" th:object="${item}">
+    <div class="form-group">
+        <label th:for="name">Name</label>
+        <input class="form-control" th:field="*{name}" required/>
+        <!--<span th:errors="*{name}" class="error"></span>-->
+    </div>
+    <div class="form-group">
+        <label th:for="description">Description</label>
+        <input class="form-control" th:field="*{description}" />
+        <!--<span th:errors="*{description}" class="error"></span>-->
+    </div>
+    <div class="form-group">
+        <label th:for="type">Type of category</label>
+        <select name="categoryId">
+            <option th:each="category : ${categories}"
+                    th:text="${category.name}"
+                    th:value="${category.id}"></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label th:for="type">Type of brand</label>
+        <select name="brandId">
+            <option th:each="brand : ${brands}"
+                    th:text="${brand.name}"
+                    th:value="${brand.id}"></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <div class="leftControl">
+            <label th:for="name">Quantity</label>
+            <input class="form-control" th:field="*{quantity}" required/>
+        </div>
+        <div class="rightControl">
+            <label th:for="name">Price</label>
+            <input class="form-control" th:field="*{price}" required/>
+        </div>
+    </div>
+
+    <input type="submit" value="Add Item" />
+    <a href="/store/list" style="margin-left:20px">Cancel</a>
+</form>
+</body>
+</html>
