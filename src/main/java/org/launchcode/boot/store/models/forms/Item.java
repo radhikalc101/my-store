@@ -2,8 +2,6 @@ package org.launchcode.boot.store.models.forms;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Item {
@@ -17,6 +15,7 @@ public class Item {
 
     @NotNull
     private String description;
+
     @NotNull
     private int quantity;
 
@@ -27,12 +26,13 @@ public class Item {
     private Category category;
 
     @ManyToOne
-    private  Brand brand;
+    private Brand brand;
 
     public Item(){}
-    public Item(String name, String description, int quantity, float price,Category category, Brand brand){
+    public Item(String name, String description, int quantity, float price, Category category, Brand brand){
         this.name = name;
         this.description = description;
+        this.price = price;
         this.category = category;
         this.quantity = quantity;
         this.brand = brand;

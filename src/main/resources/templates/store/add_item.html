@@ -15,12 +15,13 @@
     </div>
     <div class="form-group">
         <label th:for="description">Description</label>
-        <input class="form-control" th:field="*{description}" />
+        <textarea class="form-control" th:field="*{description}" />
         <!--<span th:errors="*{description}" class="error"></span>-->
     </div>
     <div class="form-group">
         <label th:for="type">Type of category</label>
-        <select name="categoryId">
+        <select name="categoryId" style="height:40px; width:250px;">
+            <option default value="0">None</option>
             <option th:each="category : ${categories}"
                     th:text="${category.name}"
                     th:value="${category.id}"></option>
@@ -28,7 +29,8 @@
     </div>
     <div class="form-group">
         <label th:for="type">Type of brand</label>
-        <select name="brandId">
+        <select name="brandId" style="height:40px; width:250px;">
+            <option default value="0">None</option>
             <option th:each="brand : ${brands}"
                     th:text="${brand.name}"
                     th:value="${brand.id}"></option>
@@ -45,7 +47,7 @@
         </div>
     </div>
 
-    <input type="submit" value="Add Item" />
+    <input type="submit" class="btn btn-primary" value="Add Item" />
     <a href="/store/list" style="margin-left:20px">Cancel</a>
 </form>
 </body>

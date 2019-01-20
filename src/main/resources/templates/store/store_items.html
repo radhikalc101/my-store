@@ -7,7 +7,34 @@
 </head>
 <body class="container">
 <nav th:replace="storefragments :: navigation"></nav>
-<!--for display:webkit-inline-box;-->
+
+<div class="input-group" style="max-width:40%;margin:10px;">
+    <input type="text"  class="form-control" placeholder="Search by name, category and brand" style="padding:5px"/>
+    <span class="input-group-addon"><a href="/store/search"><i class="glyphicon glyphicon-search"></i></a></span>
+</div>
+
+
+<div style="display:flex;flex-wrap: wrap">
+    <div th:each="item : ${items}" style="margin:10px">
+        <div class="card">
+            <img src="/images/ToorDal.jpg" alt="ToorDal" style="width:180px">
+            <div class="container1">
+                <h5><b th:text="${item.name}"></b></h5>
+                <table>
+                    <tr>
+                        <td>Price:$<span th:text="${item.price}"></span> <span style="margin-left:20px"> Qty:</span><span th:text="${item.quantity}"></span></td>
+                    </tr>
+                    <tr>
+                        <td th:if="${item.brand}">Brand: <span th:text="${item.brand.name}"></span></td>
+                    </tr>
+                    <tr>
+                        <td th:if="${item.category}">Category: <span th:text="${item.category.name}"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

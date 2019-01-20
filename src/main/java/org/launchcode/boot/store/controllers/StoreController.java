@@ -2,9 +2,11 @@ package org.launchcode.boot.store.controllers;
 
 
 import org.launchcode.boot.store.models.data.AddressDao;
+import org.launchcode.boot.store.models.data.ItemDao;
 import org.launchcode.boot.store.models.data.OwnerAccountInfoDao;
 import org.launchcode.boot.store.models.data.StoreInfoDao;
 import org.launchcode.boot.store.models.forms.Address;
+import org.launchcode.boot.store.models.forms.Item;
 import org.launchcode.boot.store.models.forms.OwnerAccountInfo;
 import org.launchcode.boot.store.models.forms.StoreInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 @Controller
@@ -31,6 +34,9 @@ public class StoreController {
 
     @Autowired
     private AddressDao addressDao;
+
+    @Autowired
+    private ItemDao itemDao;
 
     @RequestMapping(value = "")
     public String index(Model model, HttpSession session){
@@ -52,14 +58,14 @@ public class StoreController {
         OwnerAccountInfo ownerAccountInfo = ownerAccountInfoDao.findByEmail(email);//here first we are getting the email from the DB
 //        System.out.println(ownerAccountInfo.toString());
         if(password.equals(ownerAccountInfo.getPassword())){ // here checking the given password matches to the pwd in the DB
-            StoreInfo storeInfo = storeInfoDao.findByOwnerAccountInfo(ownerAccountInfo); // here getting the owner object Id ( all field details) from DB
-            System.out.println(storeInfo.toString());
+//            StoreInfo storeInfo = storeInfoDao.findByOwnerAccountInfo(ownerAccountInfo); // here getting the owner object Id ( all field details) from DB
+//            System.out.println(storeInfo.toString());
 //            model.addAttribute("store",storeInfo); // here adding the StoreInfo object to the model or view
             session.setAttribute("user",email);
-            session.setAttribute("store",storeInfo);
+//            session.setAttribute("store",storeInfo);
             return "redirect:/store/list";
         }else {
-            return "redirect:/store/login";
+            return "redirect:/store/login";//we need proper msg email and the password doesn't mach
         }
 
     }
@@ -116,10 +122,13 @@ public class StoreController {
 
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String displayStoreItems(Model model, HttpSession session){
-        if(session.getAttribute("user") != null && session.getAttribute("store") != null) {
-            model.addAttribute("store", session.getAttribute("store"));
-            //session.removeAttribute("store");
-            model.addAttribute("user", session.getAttribute("user"));
+        if(session.getAttribute("user") != null) {
+            OwnerAccountInfo ownerAccountInfo = ownerAccountInfoDao.findByEmail(session.getAttribute("user").toString());//here first we are getting the email from the DB
+            String userFullName = ownerAccountInfo.getFirstName()+" "+ ownerAccountInfo.getLastName();//getting the user full name to print on view page list.
+            StoreInfo storeInfo = storeInfoDao.findByOwnerAccountInfo(ownerAccountInfo); // here getting the owner object Id ( all field details) from DB
+            model.addAttribute("items",itemDao.findAll());
+            model.addAttribute("user",userFullName );
+            model.addAttribute("store", storeInfo);
             return "store/store_items";//rendering to template giving the path store_items.html file in the user directory
         } else {
             return "redirect:/store/logout";

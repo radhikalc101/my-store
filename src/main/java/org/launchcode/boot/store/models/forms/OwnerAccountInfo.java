@@ -2,6 +2,7 @@ package org.launchcode.boot.store.models.forms;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 @Entity
@@ -15,9 +16,12 @@ public class OwnerAccountInfo {
     private String middleName;
     @NotNull
     private String lastName;
+
     @NotNull
+    @Size(min=1,max=20)
     private String email;
     @NotNull
+    @Size(min=1,max=20, message = "Please enter the valid password")
     private String password;
     @NotNull
     private String dateOfBirth;

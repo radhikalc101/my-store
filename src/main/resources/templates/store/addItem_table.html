@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://>www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body class="container">
+<nav th:replace="fragments :: navigation"></nav>
+<h3>Add Item</h3>
+<form method="post"  th:object="${item}">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Brand</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Add</th>
+            <!--<th>Edit</th>-->
+        </tr>
+        <tr>
+            <td>
+                <input class="form-control" th:field="*{name}" required/>
+                <span th:errors="*{name}" class="error"></span>
+            </td>
+            <td>
+                <input class="form-control" th:field="*{description}" required/>
+                <span th:errors="*{description}" class="error"></span>
+            </td>
+            <td>
+                <select name="categoryId">
+                    <option th:each="category : ${categories}"
+                            th:text="${category.name}"
+                            th:value="${category.id}">
+                    </option>
+                </select>
+            </td>
+            <td>
+                <select name="brandId">
+                    <option th:each="brand : ${brands}"
+                            th:text="${brand.name}"
+                            th:value="${brand.id}">
+                    </option>
+                </select>
+            </td>
+            <td>
+                <input class="form-control" th:field="*{quantity}" required/>
+                <span th:errors="*{quantity}" class="error"></span>
+            </td>
+            <td>
+                <input class="form-control" th:field="*{price}" required/>
+                <span th:errors="*{price}" class="error"></span>
+            </td>
+
+            <td>
+                <input type="submit" value="Add Item" />
+                <span class="glyphicon glyphicon-plus-sign"></span>
+            </td>
+
+        </tr>
+    </table>
+
+</form>
+</body>
+</html>

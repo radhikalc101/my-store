@@ -48,14 +48,19 @@ public class ItemController {
             model.addAttribute("brands",brandDao.findAll());//same for brand names too
             return "store/add_item";
         }
-        Category selectedCatName = categoryDao.findById(categoryId).get();// the findById method is optional thats y we use .get() to the id
-        item.setCategory(selectedCatName);
-
-        Brand selectedBrandName = brandDao.findById(brandId).get();
-        item.setBrand(selectedBrandName);
+        System.out.println(categoryId);
+        System.out.println(brandId);
+        if(categoryId != 0) {
+            Category selectedCatName = categoryDao.findById(categoryId).get();// the findById method is optional thats y we use .get() to the id
+            item.setCategory(selectedCatName);
+        }
+        if(brandId != 0) { // checking item doesn't have a brand it will be none
+            Brand selectedBrandName = brandDao.findById(brandId).get();
+            item.setBrand(selectedBrandName);
+        }
 
         itemDao.save(item);
-        return "redirect:/store/item/add";
+        return "redirect:/store/list";
     }
 
 }
