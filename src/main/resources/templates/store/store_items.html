@@ -4,16 +4,39 @@
     <meta charset="UTF-8"/>
     <!--<meta name="viewport" content="width=device-width, initial-scale=1"/>-->
     <title>My Store</title>
+
 </head>
 <body class="container">
 <nav th:replace="storefragments :: navigation"></nav>
-
-<div class="input-group" style="max-width:40%;margin:10px;">
-    <input type="text"  class="form-control" placeholder="Search by name, category and brand" style="padding:5px"/>
-    <span class="input-group-addon"><a href="/store/search"><i class="glyphicon glyphicon-search"></i></a></span>
+<!--<form id="searchForm" action="/store/search" method="get">-->
+<form id="searchForm" action="/store/search" method="post">
+    <div class="input-group" style="max-width:40%;margin:10px;">
+        <!--<input type="text"  class="form-control" th:value="${keyword}"  id="mySearch" onkeyup="javascript:search(this)" placeholder="Search by name, category and brand" style="padding:5px"/>-->
+        <input type="text"  class="form-control" name="keyword" placeholder="Search by name, category and brand" style="padding:5px"/>
+        <span class="input-group-addon" style="padding:0px;"><button type="submit"  style="height: 32px;border: none;"><i class="glyphicon glyphicon-search"></i></button></span>
+    </div>
+</form>
+<div th:each="keyword : ${keywords}" class="chip">
+    <span th:text="${keyword}" /><span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
 </div>
+<script>
+        function setFocus(){
+            var searchInput = document.getElementById('mySearch');
+            console.log(searchInput);
+            // Multiply by 2 to ensure the cursor always ends up at the end;
+            // Opera sometimes sees a carriage return as 2 characters.
+            var strLength = searchInput.value.length * 2;
 
+            searchInput.focus();
+            searchInput.setSelectionRange(strLength, strLength);
+        }
 
+        function search(event){
+         console.log(event.value);
+         document.getElementById("searchForm").action ='/store/search/'+ event.value;
+         document.getElementById("searchForm").submit();
+        }
+    </script>
 <div style="display:flex;flex-wrap: wrap">
     <div th:each="item : ${items}" style="margin:10px">
         <div class="card">

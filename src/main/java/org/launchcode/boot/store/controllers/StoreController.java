@@ -58,11 +58,13 @@ public class StoreController {
         OwnerAccountInfo ownerAccountInfo = ownerAccountInfoDao.findByEmail(email);//here first we are getting the email from the DB
 //        System.out.println(ownerAccountInfo.toString());
         if(password.equals(ownerAccountInfo.getPassword())){ // here checking the given password matches to the pwd in the DB
-//            StoreInfo storeInfo = storeInfoDao.findByOwnerAccountInfo(ownerAccountInfo); // here getting the owner object Id ( all field details) from DB
+            StoreInfo storeInfo = storeInfoDao.findByOwnerAccountInfo(ownerAccountInfo); // here getting the owner object Id ( all field details) from DB
 //            System.out.println(storeInfo.toString());
 //            model.addAttribute("store",storeInfo); // here adding the StoreInfo object to the model or view
-            session.setAttribute("user",email);
-//            session.setAttribute("store",storeInfo);
+            String userFullName = ownerAccountInfo.getFirstName()+" "+ ownerAccountInfo.getLastName();//getting the user full name to print on view page list.
+            session.setAttribute("user",userFullName);
+            session.setAttribute("email",email);
+            session.setAttribute("store",storeInfo);
             return "redirect:/store/list";
         }else {
             return "redirect:/store/login";//we need proper msg email and the password doesn't mach
@@ -72,6 +74,9 @@ public class StoreController {
     @RequestMapping(value = "logout")
     public String logout(Model model, HttpSession session){
         session.removeAttribute("user");
+        session.removeAttribute("store");
+        session.removeAttribute("email");
+        session.removeAttribute("keywords");
         return "redirect:/store/login";
 
     }
@@ -122,13 +127,14 @@ public class StoreController {
 
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String displayStoreItems(Model model, HttpSession session){
-        if(session.getAttribute("user") != null) {
-            OwnerAccountInfo ownerAccountInfo = ownerAccountInfoDao.findByEmail(session.getAttribute("user").toString());//here first we are getting the email from the DB
-            String userFullName = ownerAccountInfo.getFirstName()+" "+ ownerAccountInfo.getLastName();//getting the user full name to print on view page list.
-            StoreInfo storeInfo = storeInfoDao.findByOwnerAccountInfo(ownerAccountInfo); // here getting the owner object Id ( all field details) from DB
+        System.out.println(session.getAttribute("email"));
+        if(session.getAttribute("email") != null && session.getAttribute("store") != null) {
+            System.out.println("User is in the session");
+          // here getting the owner object Id ( all field details) from DB
             model.addAttribute("items",itemDao.findAll());
-            model.addAttribute("user",userFullName );
-            model.addAttribute("store", storeInfo);
+            model.addAttribute("user",session.getAttribute("user") );
+            model.addAttribute("store", session.getAttribute("store"));
+            model.addAttribute("keyword", "");
             return "store/store_items";//rendering to template giving the path store_items.html file in the user directory
         } else {
             return "redirect:/store/logout";
