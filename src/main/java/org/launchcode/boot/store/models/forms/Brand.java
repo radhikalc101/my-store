@@ -43,4 +43,13 @@ public class Brand {
     public void setItems(List<Item> items) {
         this.items = items;
     }
+
+    @Override
+    public String toString() {
+        return "Brand{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", items=" + items +
+                '}';
+    }
 }

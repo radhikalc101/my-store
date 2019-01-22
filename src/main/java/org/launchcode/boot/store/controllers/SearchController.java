@@ -40,17 +40,17 @@ public class SearchController {
                     matchingItems.add(item);
                 }
             }
-            List<String> keywords = (List<String>) session.getAttribute("keywords");
+            List<String> keywords = (List<String>) session.getAttribute("keywords");// getting the given keyword and putting it in the session
             if(keywords == null){
-                keywords = new ArrayList<>();
+                keywords = new ArrayList<>();//creating a new list of keywords array
             }
-            keywords.add(keyword);
-            session.setAttribute("keywords", keywords);
+            keywords.add(keyword);// adding the given keyword to the list
+            session.setAttribute("keywords", keywords);// setting the given keyword to session
         }
         model.addAttribute("items", matchingItems.isEmpty() ? items : matchingItems);
         model.addAttribute("user", session.getAttribute("user"));
         model.addAttribute("store", session.getAttribute("store"));
-        model.addAttribute("keywords", session.getAttribute("keywords"));
+        model.addAttribute("keywords", session.getAttribute("keywords"));//getting the keywords from the session and adding it to the model
 
         return "store/store_items";
     }
