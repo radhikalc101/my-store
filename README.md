@@ -1,13 +1,7 @@
 # my-store
 This project is a store management system which allows store owner to sign up and maintain store items data for consumers(mobile apps, web apps, ect).
 
-# Project Outline
-For this assignment, you will submit a high-level outline of your project. This can, and likely will, change over time. In particular, your mentor will provide feedback and direction and feedback to help sharpen your ideas. So don't worry if you feel unsure about some aspects of the outline, or if you have to change some things later.
-
-## Assignment Description
-[Project Outline Assignment](https://education.launchcode.org/liftoff/assignments/project-outline/)
-
-## Submission Instructions
+# Project Outline:
 
 ### Overview
 - My project "My Store" is a inventory management system which allow the store owner to maintaining their store inventory and publish to online.
@@ -38,3 +32,20 @@ Later on I am planing to do a clint app for mobile consumers for online purchase
 - Javascript even handling 
 - Junit for unit testing
 - Data base model custom filters 
+
+#Project Planning:
+
+#### Wireframes
+
+- [Signup Page](https://github.com/radhikalc101/my-store/blob/master/src/main/resources/wireframes/signup_page.pdf)
+- [Login Page](https://github.com/radhikalc101/my-store/blob/master/src/main/resources/wireframes/login_page.pdf)
+- [Add Category Page](https://github.com/radhikalc101/my-store/blob/master/src/main/resources/wireframes/AddCategory_page.pdf)
+- [Add Brand Page](https://github.com/radhikalc101/my-store/blob/master/src/main/resources/wireframes/AddBrand_page.pdf)
+- [Add Item Page](https://github.com/radhikalc101/my-store/blob/master/src/main/resources/wireframes/AddItem_page.pdf)
+- [Item Search/List page](https://github.com/radhikalc101/my-store/blob/master/src/main/resources/wireframes/storeList_page.pdf)
+
+
+#### Project Tracker
+
+[User Stories (Pivotal Tracker)](https://www.pivotaltracker.com/n/projects/2238724)
+
