@@ -17,7 +17,7 @@
     </div>
 </form>
 <div th:each="keyword : ${keywords}" class="chip">
-    <span th:text="${keyword}" /><span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+    <span th:text="${keyword}" /><a class="closebtn" th:href="@{'/store/search/clear/' + ${keyword}}" onclick="this.parentElement.style.display='none'">&times;</a>
 </div>
 <script>
         function setFocus(){
@@ -40,7 +40,9 @@
 <div style="display:flex;flex-wrap: wrap">
     <div th:each="item : ${items}" style="margin:10px">
         <div class="card">
-            <img src="/images/ToorDal.jpg" alt="ToorDal" style="width:180px">
+            <a th:href="@{'/store/item/edit/'+${item.id}}">
+                <img src="/images/ToorDal.jpg" alt="ToorDal" style="width:180px">
+            </a>
             <div class="container1">
                 <h5><b th:text="${item.name}"></b></h5>
                 <table>

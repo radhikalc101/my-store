@@ -11,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -34,7 +32,6 @@ public class ItemController {
     @RequestMapping(value = "add",method = RequestMethod.GET)
     public String addItemForm(Model model){
         model.addAttribute(new Item());//create new item object and add it to the model
-        model.addAttribute("items",itemDao.findAll());//get all the item names from DB
         model.addAttribute("categories",categoryDao.findAll());//get all the category names DB
         model.addAttribute("brands",brandDao.findAll());//get all the brand names form DB
         return "store/add_item";
@@ -58,9 +55,33 @@ public class ItemController {
             Brand selectedBrandName = brandDao.findById(brandId).get();
             item.setBrand(selectedBrandName);
         }
-
         itemDao.save(item);
         return "redirect:/store/list";
     }
+
+    // edit the item details by creating blow handler
+
+    @GetMapping(value = "edit/{id}")
+    public String editFormDisplay(Model model, @PathVariable int id){
+        Item itemObject = itemDao.findById(id).get();
+        model.addAttribute("item",itemObject);
+        model.addAttribute("categories",categoryDao.findAll());//get all the category names DB
+        model.addAttribute("brands",brandDao.findAll());//get all the brand names form DB
+        return "store/edit_item";
+
+    }
+
+    @PostMapping(value = "edit")
+    public String editFormProcess(@ModelAttribute @Validated Item item, Errors errors, Model model){
+        if(errors.hasErrors()){
+            return "store/edit_item";
+        }
+        System.out.println(item.toString());
+        itemDao.save(item);
+
+        return "redirect:/store/list";
+
+    }
+
 
 }

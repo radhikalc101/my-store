@@ -33,7 +33,7 @@ Later on I am planing to do a clint app for mobile consumers for online purchase
 - Junit for unit testing
 - Data base model custom filters 
 
-#Project Planning:
+# Project Planning:
 
 #### Wireframes
 

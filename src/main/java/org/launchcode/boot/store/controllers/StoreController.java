@@ -128,6 +128,7 @@ public class StoreController {
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String displayStoreItems(Model model, HttpSession session){
         System.out.println(session.getAttribute("email"));
+        System.out.println(session.getAttribute("store"));
         if(session.getAttribute("email") != null && session.getAttribute("store") != null) {
             System.out.println("User is in the session");
           // here getting the owner object Id ( all field details) from DB

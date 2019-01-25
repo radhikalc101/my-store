@@ -2,6 +2,7 @@ package org.launchcode.boot.store.models.forms;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.text.DateFormat;
 
 @Entity
 public class Item {
@@ -28,6 +29,16 @@ public class Item {
     @ManyToOne
     private Brand brand;
 
+// add bellow to constructor and get,set methods
+//    @NotNull
+//    private int aisle;
+//
+//    @NotNull
+//    private DateFormat expirationDate;
+// published field
+// upload img
+
+
     public Item(){}
     public Item(String name, String description, int quantity, float price, Category category, Brand brand){
         this.name = name;
@@ -40,6 +51,9 @@ public class Item {
 
     public int getId() {
         return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
