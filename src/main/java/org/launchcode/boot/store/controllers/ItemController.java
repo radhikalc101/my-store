@@ -80,8 +80,13 @@ public class ItemController {
         itemDao.save(item);
 
         return "redirect:/store/list";
-
     }
 
+    @RequestMapping(value = "delete/{itemId}", method = RequestMethod.GET)
+    public String deleteItem(Model model,@PathVariable int itemId){
+            itemDao.deleteById(itemId);
+
+        return "redirect:/store/list";
+    }
 
 }

@@ -40,6 +40,7 @@
 <div style="display:flex;flex-wrap: wrap">
     <div th:each="item : ${items}" style="margin:10px">
         <div class="card">
+            <span th:text="${itemId}" /><a class="closebtn" th:href="@{'/store/item/delete/' + ${item.id}}" onclick="this.parentElement.style.display='none'">&times;</a>
             <a th:href="@{'/store/item/edit/'+${item.id}}">
                 <img src="/images/ToorDal.jpg" alt="ToorDal" style="width:180px">
             </a>

@@ -78,7 +78,7 @@ public class SearchController {
             }
         }
 
-        model.addAttribute("items", matchingItems.isEmpty() ? items : matchingItems);
+        model.addAttribute("items", matchingItems.isEmpty() ? items : matchingItems);//ternary if condition (if thr is no search keyword then list all items on display)
         model.addAttribute("user", session.getAttribute("user"));
         model.addAttribute("store", session.getAttribute("store"));
         model.addAttribute("keywords", session.getAttribute("keywords"));
