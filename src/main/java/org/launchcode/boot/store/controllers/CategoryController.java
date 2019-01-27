@@ -22,17 +22,17 @@ public class CategoryController {
 
     @GetMapping(value = "add")
     public String addCategoryForm(Model model){
-        model.addAttribute("category", new Category());//this is the object name
-        model.addAttribute("categories",categoryDao.findAll());//getting all the items name form the DB
-        return "category/add_category";// render template to the file giving the path
+        model.addAttribute("category", new Category());
+        model.addAttribute("categories",categoryDao.findAll());
+        return "category/add_category";
     }
     @PostMapping(value = "add")
     public String processAddCategoryForm(@ModelAttribute @Valid Category category, Errors errors, Model model){
         if(errors.hasErrors()){
-            return "category/add_category"; // if it has errors it is returning to the folder of category in that add_category.html form view page
+            return "category/add_category";
         }
-        categoryDao.save(category);// save the given category name in the DB
-        return "redirect:/store/category/add"; // displaying the category  name in the same add page
+        categoryDao.save(category);
+        return "redirect:/store/category/add";
     }
 
 }

@@ -32,8 +32,8 @@ public class ItemController {
     @RequestMapping(value = "add",method = RequestMethod.GET)
     public String addItemForm(Model model){
         model.addAttribute(new Item());//create new item object and add it to the model
-        model.addAttribute("categories",categoryDao.findAll());//get all the category names DB
-        model.addAttribute("brands",brandDao.findAll());//get all the brand names form DB
+        model.addAttribute("categories",categoryDao.findAll());
+        model.addAttribute("brands",brandDao.findAll());
         return "store/add_item";
     }
 
@@ -41,17 +41,15 @@ public class ItemController {
     public String processOfAddItemForm(@ModelAttribute @Valid Item item, Errors errors,
                                        @RequestParam int categoryId,@RequestParam int brandId, Model model){
         if(errors.hasErrors()){
-            model.addAttribute("categories",categoryDao.findAll());//if errors occurs again display the list of category names for again new request
-            model.addAttribute("brands",brandDao.findAll());//same for brand names too
+            model.addAttribute("categories",categoryDao.findAll());
+            model.addAttribute("brands",brandDao.findAll());
             return "store/add_item";
         }
-        System.out.println(categoryId);
-        System.out.println(brandId);
         if(categoryId != 0) {
-            Category selectedCatName = categoryDao.findById(categoryId).get();// the findById method is optional thats y we use .get() to the id
+            Category selectedCatName = categoryDao.findById(categoryId).get();
             item.setCategory(selectedCatName);
         }
-        if(brandId != 0) { // checking item doesn't have a brand it will be none
+        if(brandId != 0) {
             Brand selectedBrandName = brandDao.findById(brandId).get();
             item.setBrand(selectedBrandName);
         }
@@ -65,8 +63,8 @@ public class ItemController {
     public String editFormDisplay(Model model, @PathVariable int id){
         Item itemObject = itemDao.findById(id).get();
         model.addAttribute("item",itemObject);
-        model.addAttribute("categories",categoryDao.findAll());//get all the category names DB
-        model.addAttribute("brands",brandDao.findAll());//get all the brand names form DB
+        model.addAttribute("categories",categoryDao.findAll());
+        model.addAttribute("brands",brandDao.findAll());
         return "store/edit_item";
 
     }
@@ -76,17 +74,23 @@ public class ItemController {
         if(errors.hasErrors()){
             return "store/edit_item";
         }
-        System.out.println(item.toString());
         itemDao.save(item);
 
         return "redirect:/store/list";
     }
-
+// deleting the item form list of items using itemId
     @RequestMapping(value = "delete/{itemId}", method = RequestMethod.GET)
     public String deleteItem(Model model,@PathVariable int itemId){
             itemDao.deleteById(itemId);
 
         return "redirect:/store/list";
     }
-
+    @RequestMapping(value = "publish/{id}", method = RequestMethod.GET)
+    public String publishItem(Model model,@PathVariable int id){
+       System.out.println(id);
+        Item item = itemDao.findById(id).get();
+        item.setPublished(!item.isPublished());
+        itemDao.save(item);
+        return "redirect:/store/list";
+    }
 }

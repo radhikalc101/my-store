@@ -23,30 +23,32 @@ public class Item {
     @NotNull
     private float price;
 
+    @NotNull
+    private boolean isPublished;
+
     @ManyToOne
     private Category category;
 
     @ManyToOne
     private Brand brand;
 
-// add bellow to constructor and get,set methods
-//    @NotNull
-//    private int aisle;
-//
-//    @NotNull
-//    private DateFormat expirationDate;
-// published field
-// upload img
+    @NotNull
+    private int aisle;
 
+    @NotNull
+    private String expirationDate;
 
     public Item(){}
-    public Item(String name, String description, int quantity, float price, Category category, Brand brand){
+    public Item(String name, String description, int quantity, float price, Category category, Brand brand,int aisle,String expirationDate){
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
         this.quantity = quantity;
         this.brand = brand;
+        this.aisle = aisle;
+        this.expirationDate = expirationDate;
+        this.isPublished = false;
     }
 
     public int getId() {
@@ -104,6 +106,29 @@ public class Item {
         this.brand = brand;
     }
 
+    public int getAisle() {
+        return aisle;
+    }
+
+    public void setAisle(int aisle) {
+        this.aisle = aisle;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+    public boolean isPublished() {
+        return isPublished;
+    }
+
+    public void setPublished(boolean published) {
+        isPublished = published;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -114,6 +139,9 @@ public class Item {
                 ", price=" + price +
                 ", category=" + category +
                 ", brand=" + brand +
+                ", isPublished=" + isPublished +
                 '}';
     }
+
+
 }

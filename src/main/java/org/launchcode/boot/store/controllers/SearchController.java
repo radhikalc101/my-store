@@ -24,12 +24,12 @@ public class SearchController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public String findByKeyword(Model model, @RequestParam String keyword, HttpSession session){
 
-        List<String> keywords = (List<String>) session.getAttribute("keywords");// getting the given keyword and putting it in the session
+        List<String> keywords = (List<String>) session.getAttribute("keywords");
         if (keywords == null) {
-            keywords = new ArrayList<>();//creating a new list of keywords array
+            keywords = new ArrayList<>();
         }
         if(keyword != null) {
-            keywords.add(keyword.toLowerCase());// adding the given keyword to the list
+            keywords.add(keyword.toLowerCase());
         }
         session.setAttribute("keywords", keywords);// setting the given keyword to session of list keywords
 
@@ -53,15 +53,15 @@ public class SearchController {
 //        model.addAttribute("keywords", session.getAttribute("keywords"));
 //
 //        return "store/store_items";
-        return this.search(keywords, model, session);// calling the search method in the same call we are using this.
+        return this.search(keywords, model, session);
     }
     @RequestMapping(value = "clear/{keyword}", method = RequestMethod.GET)
     public String clearKeyword(Model model, HttpSession session, @PathVariable String keyword){
 
-        List<String> keywords = (List<String>) session.getAttribute("keywords");// getting all the keywords from the session
-        keywords.remove(keyword);// removing given keyword from the list of keywords and adding(setting) the rest of keywords list to session
+        List<String> keywords = (List<String>) session.getAttribute("keywords");
+        keywords.remove(keyword);
         session.setAttribute("keywords",keywords);
-        return this.search(keywords, model, session);// method calling
+        return this.search(keywords, model, session);
 
     }
 

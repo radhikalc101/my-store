@@ -47,5 +47,5 @@ Later on I am planing to do a clint app for mobile consumers for online purchase
 
 #### Project Tracker
 
-[User Stories (Pivotal Tracker)](https://www.pivotaltracker.com/n/projects/2238724)
+[User Stories (Pivotal Tracker)](https://www.pivotaltracker.com/projects/2238724)
 

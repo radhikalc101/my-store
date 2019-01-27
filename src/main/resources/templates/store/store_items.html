@@ -20,32 +20,24 @@
     <span th:text="${keyword}" /><a class="closebtn" th:href="@{'/store/search/clear/' + ${keyword}}" onclick="this.parentElement.style.display='none'">&times;</a>
 </div>
 <script>
-        function setFocus(){
-            var searchInput = document.getElementById('mySearch');
-            console.log(searchInput);
-            // Multiply by 2 to ensure the cursor always ends up at the end;
-            // Opera sometimes sees a carriage return as 2 characters.
-            var strLength = searchInput.value.length * 2;
+    jQuery.noConflict();
+     // Use jQuery via jQuery() instead of via $()
+     jQuery(document).ready(function(){
+       jQuery("#publish").bootstrapToggle({
+          on: 'Published',
+          off: 'Un-Published'
+        });
+     });
 
-            searchInput.focus();
-            searchInput.setSelectionRange(strLength, strLength);
-        }
-
-        function search(event){
-         console.log(event.value);
-         document.getElementById("searchForm").action ='/store/search/'+ event.value;
-         document.getElementById("searchForm").submit();
-        }
-    </script>
+</script>
 <div style="display:flex;flex-wrap: wrap">
     <div th:each="item : ${items}" style="margin:10px">
         <div class="card">
-            <span th:text="${itemId}" /><a class="closebtn" th:href="@{'/store/item/delete/' + ${item.id}}" onclick="this.parentElement.style.display='none'">&times;</a>
-            <a th:href="@{'/store/item/edit/'+${item.id}}">
-                <img src="/images/ToorDal.jpg" alt="ToorDal" style="width:180px">
+            <a th:href="@{'/store/item/edit/'+${item.id}}" class="card-img-top">
+                <img src="/images/ToorDal.jpg" th:alt="${item.name}" style="width:170px">
             </a>
-            <div class="container1">
-                <h5><b th:text="${item.name}"></b></h5>
+            <div class="card-body">
+                <h4 class="card-title" th:text="${item.name}"></h4>
                 <table>
                     <tr>
                         <td>Price:$<span th:text="${item.price}"></span> <span style="margin-left:20px"> Qty:</span><span th:text="${item.quantity}"></span></td>
@@ -57,6 +49,14 @@
                         <td th:if="${item.category}">Category: <span th:text="${item.category.name}"></span></td>
                     </tr>
                 </table>
+                <div>
+                    <span>Published : </span>
+                    <input type="checkbox" id="publish" th:checked="${item.published}" th:onclick="'window.location.href=\'' + @{/store/item/publish/{id}(id=${item.id})} + '\''"
+                           data-toggle="toggle" data-size="mini">
+                    <a style="margin-left:35px;" class="closeBtn" th:href="@{'/store/item/delete/' + ${item.id}}">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
