@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://>www.thymeleaf.org/">
 <head th:replace="storefragments :: head">
-    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!--<meta name="viewport" content="width=device-width, initial-scale=1"/>-->
     <title>My Store</title>
+    <script type="text/javascript" language="JavaScript">
+        jQuery.noConflict();
+         // Use jQuery via jQuery() instead of via $()
+         jQuery(document).ready(function(){
+           <!--jQuery("#publish").bootstrapToggle({-->
+              <!--on: 'Published',-->
+              <!--off: 'Un-Published'-->
+            <!--});-->
+            jQuery("#publish").onChange(function(){
+                alert('publishing')
+            });
+         });
+         function publish(event, itemId){
+            alert('publishing')
+            window.location.href='/store/item.publish/'+itemId;
+         }
 
+</script>
 </head>
 <body class="container">
 <nav th:replace="storefragments :: navigation"></nav>
@@ -19,17 +36,7 @@
 <div th:each="keyword : ${keywords}" class="chip">
     <span th:text="${keyword}" /><a class="closebtn" th:href="@{'/store/search/clear/' + ${keyword}}" onclick="this.parentElement.style.display='none'">&times;</a>
 </div>
-<script>
-    jQuery.noConflict();
-     // Use jQuery via jQuery() instead of via $()
-     jQuery(document).ready(function(){
-       jQuery("#publish").bootstrapToggle({
-          on: 'Published',
-          off: 'Un-Published'
-        });
-     });
 
-</script>
 <div style="display:flex;flex-wrap: wrap">
     <div th:each="item : ${items}" style="margin:10px">
         <div class="card">
@@ -51,8 +58,8 @@
                 </table>
                 <div>
                     <span>Published : </span>
-                    <input type="checkbox" id="publish" th:checked="${item.published}" th:onclick="'window.location.href=\'' + @{/store/item/publish/{id}(id=${item.id})} + '\''"
-                           data-toggle="toggle" data-size="mini">
+                    <input type="checkbox" id="publish" th:checked="${item.published}" th:onchange="'window.location.href=\'' + @{/store/item/publish/{id}(id=${item.id})} + '\''" data-toggle="toggle" data-size="mini">
+                    <!--<input type="checkbox" id="publish" th:checked="${item.published}" th:onchange="@{'javascript:publish('+${item.id}+')'}" data-toggle="toggle" data-size="mini">-->
                     <a style="margin-left:35px;" class="closeBtn" th:href="@{'/store/item/delete/' + ${item.id}}">
                         <i class="glyphicon glyphicon-trash"></i>
                     </a>

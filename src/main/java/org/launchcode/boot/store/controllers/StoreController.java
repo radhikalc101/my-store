@@ -38,6 +38,11 @@ public class StoreController {
     @Autowired
     private ItemDao itemDao;
 
+    @GetMapping(value = "upload")
+    public String uploadImage(Model model){
+        return "upload/images";
+    }
+
     @RequestMapping(value = "")
     public String index(Model model, HttpSession session){
         if(session.getAttribute("user")!= null){
