@@ -1,6 +1,6 @@
 body {
     font-family: sans-serif;
-    color: mediumseagreen;
+    color: mediumseagreen !important;
     background-image: url("../images/background.jpg");
 }
 
@@ -76,8 +76,17 @@ hr {
     float:right;
      width:45%;
 }
-
-
+.loginIcon{
+    font-size: 28px !important;
+    color: gray;
+    background-color: lightgray;
+    padding: 5px;
+ }
+#message {
+    position: fixed;
+    top: 0;
+    right: 0;
+}
 /*table {
   border-collapse: collapse;
   width: 100%;

@@ -5,14 +5,26 @@
     <title>My Store</title>
 </head>
 <body class="container">
+<div id="message">
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}"/>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
 <nav th:replace="fragments :: navigation"></nav>
+
 <form id="form1" method="post" style="max-width:500px;">
 
         <!--<label th:for="email">Email</label>-->
         <!--<input class="form-control" name="email" type="email" required/>-->
     <div class="form-group">
         <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <span class="input-group-addon">
+                <i class="fa fa-user loginIcon" aria-hidden="true"></i>
+            </span>
+
             <input type="email" class="form-control" name="email" placeholder="Email" required/>
         </div>
     </div>
@@ -21,7 +33,9 @@
         <!--<input class="form-control" name="password" type="password" required/>-->
 
     <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <span class="input-group-addon">
+            <i class="fa fa-lock loginIcon" aria-hidden="true" ></i>
+        </span>
         <input type="password" class="form-control" name="password" placeholder="Password" required/>
     </div>
     </div>

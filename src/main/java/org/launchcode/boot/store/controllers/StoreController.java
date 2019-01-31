@@ -54,7 +54,7 @@ public class StoreController {
 
     @RequestMapping(value = "login",method = RequestMethod.GET)
     public String displayLoginForm(Model model){
-
+        model.addAttribute("errorMessage","");
         return "user/login";//rendering to template giving the path login.html file in the user directory
 
     }
@@ -62,7 +62,8 @@ public class StoreController {
     public String processLoginForm(@RequestParam String email, @RequestParam String password, Model model, HttpSession session){// here the given param names should match in the form in the lable tag 'name' field
         OwnerAccountInfo ownerAccountInfo = ownerAccountInfoDao.findByEmail(email);//here first we are getting the email from the DB
 //        System.out.println(ownerAccountInfo.toString());
-        if(password.equals(ownerAccountInfo.getPassword())){ // here checking the given password matches to the pwd in the DB
+        model.addAttribute("errorMessage","");
+        if(ownerAccountInfo != null && password.equals(ownerAccountInfo.getPassword())){ // here checking the given password matches to the pwd in the DB
             StoreInfo storeInfo = storeInfoDao.findByOwnerAccountInfo(ownerAccountInfo); // here getting the owner object Id ( all field details) from DB
 //            System.out.println(storeInfo.toString());
 //            model.addAttribute("store",storeInfo); // here adding the StoreInfo object to the model or view
@@ -72,7 +73,8 @@ public class StoreController {
             session.setAttribute("store",storeInfo);
             return "redirect:/store/list";
         }else {
-            return "redirect:/store/login";//we need proper msg email and the password doesn't mach
+            model.addAttribute("errorMessage","Invalid User Name / Password");
+            return "user/login";//we need proper msg email and the password doesn't mach
         }
 
     }
