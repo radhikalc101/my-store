@@ -2,10 +2,11 @@ package org.launchcode.boot.store.controllers;
 
 import org.launchcode.boot.store.models.data.BrandDao;
 import org.launchcode.boot.store.models.data.CategoryDao;
+import org.launchcode.boot.store.models.data.DBFileDao;
 import org.launchcode.boot.store.models.data.ItemDao;
-
 import org.launchcode.boot.store.models.forms.Brand;
 import org.launchcode.boot.store.models.forms.Category;
+import org.launchcode.boot.store.models.forms.DBFile;
 import org.launchcode.boot.store.models.forms.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "store/item")
@@ -29,10 +31,31 @@ public class ItemController {
     @Autowired
     private BrandDao brandDao;
 
+    @Autowired
+    private DBFileDao fileDao;
+
+    @GetMapping(value = "loadImages")
+    public String loadImages(Model model) {
+        model.addAttribute(new Item());
+        model.addAttribute("categories",categoryDao.findAll());
+        model.addAttribute("brands",brandDao.findAll());
+        Iterable<DBFile> images = fileDao.findAll();
+//        List<ByteArrayResource> data = new ArrayList<>();
+//        images.forEach(file -> {
+//
+//                data.add(file.getData());
+//
+//        });
+        model.addAttribute("images",images);
+        return "store/add_item";
+    }
+
     @RequestMapping(value = "add",method = RequestMethod.GET)
     public String addItemForm(Model model){
         model.addAttribute(new Item());//create new item object and add it to the model
-        model.addAttribute("categories",categoryDao.findAll());
+        List<Category> categories = new ArrayList<>();
+        categoryDao.findAll().forEach( category -> categories.add(category));
+        model.addAttribute("categories",categories);
         model.addAttribute("brands",brandDao.findAll());
         return "store/add_item";
     }

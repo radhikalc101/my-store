@@ -7,6 +7,20 @@
 <body class="container">
 <nav th:replace="fragments :: navigation"></nav>
 <h3>Registration Form</h3>
+<script type="text/javascript">
+        $(document).ready(function() {
+            console.log('ready');
+            var cityList = []
+            for(i in cities){
+                cityList[i] = cities[i].city;
+            }
+            autocomplete(document.getElementById("ownerAddressState"), states);
+            autocomplete(document.getElementById("ownerAddressCity"), cityList);
+            autocomplete(document.getElementById("storeAddressState"), states);
+            autocomplete(document.getElementById("storeAddressCity"), cityList);
+        })
+    </script>
+
 <form method="post" th:object="${store}">
     <div class="form-group">
         <div class="leftControl">
@@ -18,14 +32,6 @@
             <input class="form-control" th:field="*{storeLicense}" type="text" required/>
         </div>
     </div>
-    <!--<div class="form-group">-->
-        <!--<label th:for="creationDateTime">CreationDateTime</label>-->
-        <!--<input class="form-control" th:field="*{creationDateTime}" type="datetime-local" required/>-->
-    <!--</div>-->
-    <!--<div class="form-group">-->
-        <!--<label th:for="updatedDateTime">UpdatedDateTime</label>-->
-        <!--<input class="form-control" th:field="*{updatedDateTime}" type="datetime-local" required/>-->
-    <!--</div>-->
     <hr/>
     <div class="form-group">
         <h3>Store Address</h3>
@@ -39,11 +45,23 @@
         </div>
         <div class="leftControl">
             <label th:for="storeAddress">City</label>
-            <input class="form-control" th:field="*{storeAddress.city}" placeholder="City" required/>
+            <!--<input class="form-control" th:field="*{storeAddress.city}" placeholder="City" required/>-->
+            <div class="autocomplete" style="width: 100%;">
+                <input id="storeAddressCity" type="text" class="form-control" th:field="*{storeAddress.city}" placeholder="City">
+            </div>
         </div>
         <div class="rightControl">
             <label th:for="storeAddress">State</label>
-            <input class="form-control" th:field="*{storeAddress.state}" placeholder="State" required/>
+            <div class="autocomplete" style="width: 100%;">
+                <input id="storeAddressState" type="text" class="form-control" th:field="*{storeAddress.state}" placeholder="State">
+            </div>
+            <!--<select class="form-control" th:field="*{storeAddress.state}">-->
+                <!--<option default value=" ">Select State</option>-->
+                <!--<option th:each="state : ${states}"-->
+                        <!--th:text="${state.name}"-->
+                        <!--th:value="${state.abbreviation}"></option>-->
+            <!--</select>-->
+            <!--<input class="form-control" th:field="*{storeAddress.state}" placeholder="State" required/>-->
         </div>
 
         <div class="leftControl">
@@ -52,7 +70,7 @@
         </div>
         <div class="rightControl">
             <label th:for="storeAddress">Country</label>
-            <input class="form-control" th:field="*{storeAddress.country}" placeholder="Country" required/>
+            <input class="form-control" th:field="*{storeAddress.country}"  disabled="disabled" />
         </div>
     </div>
     <hr/>
@@ -118,11 +136,23 @@
         </div>
         <div class="leftControl">
             <label th:for="storeAddress">City</label>
-            <input class="form-control" th:field="*{ownerAccountInfo.ownerAddress.city}"  placeholder="City"required/>
+            <!--<input class="form-control" th:field="*{ownerAccountInfo.ownerAddress.city}"  placeholder="City"required/>-->
+            <div class="autocomplete" style="width: 100%;">
+                <input id="ownerAddressCity" type="text" class="form-control"  th:field="*{ownerAccountInfo.ownerAddress.city}" placeholder="City">
+            </div>
         </div>
         <div class="rightControl">
             <label th:for="storeAddress">State</label>
-            <input class="form-control" th:field="*{ownerAccountInfo.ownerAddress.state}"  placeholder="State"required/>
+            <div class="autocomplete" style="width: 100%;">
+                <input id="ownerAddressState" type="text" class="form-control" th:field="*{ownerAccountInfo.ownerAddress.state}" placeholder="State">
+            </div>
+            <!--<select class="form-control" th:field="*{ownerAccountInfo.ownerAddress.state}">-->
+                <!--<option default value=" ">Select State</option>-->
+                <!--<option th:each="state : ${states}"-->
+                        <!--th:text="${state.name}"-->
+                        <!--th:value="${state.abbreviation}"></option>-->
+            <!--</select>-->
+            <!--<input class="form-control" th:field="*{ownerAccountInfo.ownerAddress.state}"  placeholder="State"required/>-->
         </div>
 
         <div class="leftControl">
@@ -131,11 +161,10 @@
         </div>
         <div class="rightControl">
             <label th:for="storeAddress">Country</label>
-            <input class="form-control" th:field="*{ownerAccountInfo.ownerAddress.country}"  placeholder="Country"required/>
+            <input class="form-control" th:field="*{ownerAccountInfo.ownerAddress.country}" disabled="disabled"/>
         </div>
     </div>
     <input type="submit" class="signup" value="Sign Up"/>
-
 </form>
 </body>
 </html>

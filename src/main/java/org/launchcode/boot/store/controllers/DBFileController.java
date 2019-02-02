@@ -2,7 +2,6 @@ package org.launchcode.boot.store.controllers;
 
 
 import org.launchcode.boot.store.models.UploadFileResponse;
-import org.launchcode.boot.store.models.forms.Brand;
 import org.launchcode.boot.store.models.forms.DBFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +11,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

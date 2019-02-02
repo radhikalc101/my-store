@@ -27,7 +27,7 @@
                         th:text="${category.name}"
                         th:value="${category.id}"></option>
             </select>
-            <a href="/store/category/add" class="btn btn-primary" style="float:right">Add</a>
+            <a href="/store/category/add" class="btn btn-info" style="float:right">Add</a>
         </div>
         <div class="rightControl">
             <label th:for="type" style="width:200px">Brand</label>
@@ -38,7 +38,7 @@
                         th:value="${brand.id}">
                 </option>
             </select>
-            <a href="/store/brand/add" class="btn btn-primary" style="float:right">Add</a>
+            <a href="/store/brand/add" class="btn btn-info" style="float:right">Add</a>
         </div>
     </div>
     <div class="form-group">
@@ -68,7 +68,20 @@
         </div>
     </div>
 
+    <div>
+        <img href="" title="No Image"/>
+        <a href="/store/item/loadImages" class="btn btn-secondary">Upload Image<a/>
+    </div>
+    <div class="modal-body" style="display:none">
+        <div class="container-fluid">
+            <div class="row" th:each="image: ${images}">
+                <div class="col-md-4">
+                    <img style='height:100px;width:100px' th:src="@{'data:image/png;base64,URL.createObjectURL(' + ${image.data} +')'}"/>
+                </div>
+            </div>
 
+        </div>
+    </div>
     <input type="submit" class="btn btn-primary" value="Add Item" />
     <a href="/store/list" style="margin-left:20px">Cancel</a>
 </form>

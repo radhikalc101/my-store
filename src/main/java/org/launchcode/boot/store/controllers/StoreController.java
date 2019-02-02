@@ -1,14 +1,13 @@
 package org.launchcode.boot.store.controllers;
 
 
-import org.launchcode.boot.store.models.data.AddressDao;
-import org.launchcode.boot.store.models.data.ItemDao;
-import org.launchcode.boot.store.models.data.OwnerAccountInfoDao;
-import org.launchcode.boot.store.models.data.StoreInfoDao;
-import org.launchcode.boot.store.models.forms.Address;
-import org.launchcode.boot.store.models.forms.Item;
-import org.launchcode.boot.store.models.forms.OwnerAccountInfo;
-import org.launchcode.boot.store.models.forms.StoreInfo;
+//import com.fasterxml.jackson.core.JsonFactory;
+//import com.fasterxml.jackson.core.JsonParser;
+//import com.fasterxml.jackson.core.type.TypeReference;
+//import com.fasterxml.jackson.databind.MappingIterator;
+//import com.fasterxml.jackson.databind.ObjectMapper;
+import org.launchcode.boot.store.models.data.*;
+import org.launchcode.boot.store.models.forms.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +17,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+//import java.io.File;
+//import java.io.IOException;
+//import java.io.InputStream;
+//import java.nio.file.Paths;
 import java.sql.Timestamp;
-import java.util.List;
+//import java.util.List;
 
 
 @Controller
@@ -37,6 +40,11 @@ public class StoreController {
 
     @Autowired
     private ItemDao itemDao;
+
+    @Autowired
+    private DBFileDao fileDao;
+
+//    private State[] states;
 
     @GetMapping(value = "upload")
     public String uploadImage(Model model){
@@ -61,12 +69,9 @@ public class StoreController {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String processLoginForm(@RequestParam String email, @RequestParam String password, Model model, HttpSession session){// here the given param names should match in the form in the lable tag 'name' field
         OwnerAccountInfo ownerAccountInfo = ownerAccountInfoDao.findByEmail(email);//here first we are getting the email from the DB
-//        System.out.println(ownerAccountInfo.toString());
         model.addAttribute("errorMessage","");
         if(ownerAccountInfo != null && password.equals(ownerAccountInfo.getPassword())){ // here checking the given password matches to the pwd in the DB
             StoreInfo storeInfo = storeInfoDao.findByOwnerAccountInfo(ownerAccountInfo); // here getting the owner object Id ( all field details) from DB
-//            System.out.println(storeInfo.toString());
-//            model.addAttribute("store",storeInfo); // here adding the StoreInfo object to the model or view
             String userFullName = ownerAccountInfo.getFirstName()+" "+ ownerAccountInfo.getLastName();//getting the user full name to print on view page list.
             session.setAttribute("user",userFullName);
             session.setAttribute("email",email);
@@ -97,13 +102,24 @@ public class StoreController {
         OwnerAccountInfo owner = new OwnerAccountInfo();
         Address ownerAddress = new Address();
         owner.setOwnerAddress(ownerAddress);// created new owner object and new address object for the owner and setting the new address object to the owner
-
         store.setOwnerAccountInfo(owner);// setting the owner object with the address to the store object
-
+//        model.addAttribute("states", this.getStates());
         model.addAttribute("store", store);
         return "user/signup";//rendering to template giving the path signup.html file in the user directory
     }
-//    @ResponseBody
+
+//    private State[] getStates(){
+//        if(this.states == null || this.states.length == 0) {
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            try {
+//                this.states = objectMapper.readValue(new File(Paths.get("States.json").toUri()), State[].class);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return this.states;
+//
+//    }
     @PostMapping(value = "signup")
     public String processSignupForm(@ModelAttribute @Valid StoreInfo store, Model model, Errors errors, @RequestParam String confirmEmail, @RequestParam String confirmPassword, HttpSession session){
         if(errors.hasErrors()){
