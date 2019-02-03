@@ -136,9 +136,10 @@ public class StoreController {
     public String displayStoreItems(Model model, HttpSession session){
         if(session.getAttribute("email") != null && session.getAttribute("store") != null) {
           // here getting the owner object Id ( all field details) from DB
-            model.addAttribute("items",itemDao.findAll());
+            StoreInfo storeInfo = (StoreInfo) session.getAttribute("store");
+            model.addAttribute("items",itemDao.findByStoreInfo(storeInfo));
             model.addAttribute("user",session.getAttribute("user") );
-            model.addAttribute("store", session.getAttribute("store"));
+            model.addAttribute("store", storeInfo);
             model.addAttribute("keyword", "");
             return "store/store_items";//rendering to template giving the path store_items.html file in the user directory
         } else {

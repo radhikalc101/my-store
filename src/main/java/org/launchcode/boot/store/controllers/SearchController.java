@@ -2,6 +2,7 @@ package org.launchcode.boot.store.controllers;
 
 import org.launchcode.boot.store.models.data.ItemDao;
 import org.launchcode.boot.store.models.forms.Item;
+import org.launchcode.boot.store.models.forms.StoreInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +29,7 @@ public class SearchController {
         if (keywords == null) {
             keywords = new ArrayList<>();
         }
-        if(keyword != null) {
+        if(keyword != null && !keyword.trim().equals("")) {
             keywords.add(keyword.toLowerCase());
         }
         session.setAttribute("keywords", keywords);// setting the given keyword to session of list keywords
@@ -66,7 +67,8 @@ public class SearchController {
     }
 
     private String search(List<String> keywords, Model model, HttpSession session){
-        Iterable<Item> items = itemDao.findAll();
+        StoreInfo storeInfo = (StoreInfo) session.getAttribute("store");
+        Iterable<Item> items = itemDao.findByStoreInfo(storeInfo);
         List<Item> matchingItems = new ArrayList<>();
         for (Item item : items) {
             if (isKeywordExist(item.getName(), keywords)) {
@@ -77,8 +79,7 @@ public class SearchController {
                 matchingItems.add(item);
             }
         }
-
-        model.addAttribute("items", matchingItems.isEmpty() ? items : matchingItems);//ternary if condition (if thr is no search keyword then list all items on display)
+        model.addAttribute("items", matchingItems);//ternary if condition (if thr is no search keyword then list all items on display)
         model.addAttribute("user", session.getAttribute("user"));
         model.addAttribute("store", session.getAttribute("store"));
         model.addAttribute("keywords", session.getAttribute("keywords"));
@@ -87,7 +88,7 @@ public class SearchController {
     }
 
     private boolean isKeywordExist(String name, List<String> keywords){
-        boolean found = false;
+        boolean found = keywords.isEmpty();
         for(String keyword : keywords){
             if(name.toLowerCase().contains(keyword)){
                 found = true;

@@ -7,6 +7,7 @@ import org.launchcode.boot.store.models.data.ItemDao;
 import org.launchcode.boot.store.models.forms.Brand;
 import org.launchcode.boot.store.models.forms.Category;
 import org.launchcode.boot.store.models.forms.Item;
+import org.launchcode.boot.store.models.forms.StoreInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -39,7 +41,7 @@ public class ItemController {
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processOfAddItemForm(@ModelAttribute @Valid Item item, Errors errors,
-                                       @RequestParam int categoryId,@RequestParam int brandId, Model model){
+                                       @RequestParam int categoryId, @RequestParam int brandId, Model model, HttpSession session){
         if(errors.hasErrors()){
             model.addAttribute("categories",categoryDao.findAll());
             model.addAttribute("brands",brandDao.findAll());
@@ -53,6 +55,8 @@ public class ItemController {
             Brand selectedBrandName = brandDao.findById(brandId).get();
             item.setBrand(selectedBrandName);
         }
+        StoreInfo storeInfo = (StoreInfo) session.getAttribute("store");
+        item.setStoreInfo(storeInfo);
         itemDao.save(item);
         return "redirect:/store/list";
     }

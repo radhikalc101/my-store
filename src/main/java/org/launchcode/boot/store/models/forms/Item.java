@@ -2,7 +2,6 @@ package org.launchcode.boot.store.models.forms;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.text.DateFormat;
 
 @Entity
 public class Item {
@@ -35,11 +34,15 @@ public class Item {
     @NotNull
     private int aisle;
 
+    @ManyToOne
+    private StoreInfo storeInfo;
+
     @NotNull
     private String expirationDate;
 
     public Item(){}
-    public Item(String name, String description, int quantity, float price, Category category, Brand brand,int aisle,String expirationDate){
+    public Item(String name, String description, int quantity, float price, Category category, Brand brand,
+                int aisle,String expirationDate, StoreInfo storeInfo){
         this.name = name;
         this.description = description;
         this.price = price;
@@ -49,11 +52,13 @@ public class Item {
         this.aisle = aisle;
         this.expirationDate = expirationDate;
         this.isPublished = false;
+        this.storeInfo = storeInfo;
     }
 
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -121,12 +126,21 @@ public class Item {
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
+
     public boolean isPublished() {
         return isPublished;
     }
 
     public void setPublished(boolean published) {
         isPublished = published;
+    }
+
+    public StoreInfo getStoreInfo() {
+        return storeInfo;
+    }
+
+    public void setStoreInfo(StoreInfo storeInfo) {
+        this.storeInfo = storeInfo;
     }
 
     @Override
@@ -140,8 +154,7 @@ public class Item {
                 ", category=" + category +
                 ", brand=" + brand +
                 ", isPublished=" + isPublished +
+                ", store=" + storeInfo.getName() +
                 '}';
     }
-
-
 }
