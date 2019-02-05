@@ -15,9 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+
 
 @Controller
 @RequestMapping(value = "store/item")
@@ -35,25 +37,27 @@ public class ItemController {
     @Autowired
     private DBFileDao fileDao;
 
-    @GetMapping(value = "loadImages")
-    public String loadImages(Model model) {
-        model.addAttribute(new Item());
-        model.addAttribute("categories",categoryDao.findAll());
-        model.addAttribute("brands",brandDao.findAll());
-        Iterable<DBFile> images = fileDao.findAll();
-//        List<ByteArrayResource> data = new ArrayList<>();
-//        images.forEach(file -> {
-//
-//                data.add(file.getData());
-//
-//        });
-        model.addAttribute("images",images);
-        return "store/add_item";
+    @RequestMapping(value = "/imageDisplay", method = RequestMethod.GET)
+    public void showImage(@RequestParam("id") Integer imageId, HttpServletResponse response) {
+        System.out.println(imageId);
+        if(imageId != 0) {
+            DBFile image = fileDao.findById(imageId).get();
+            response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+            try {
+                System.out.println(image);
+                response.getOutputStream().write(image.getData());
+                response.getOutputStream().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @RequestMapping(value = "add",method = RequestMethod.GET)
     public String addItemForm(Model model){
-        model.addAttribute(new Item());//create new item object and add it to the model
+        Item item = new Item();
+        item.setImage(new DBFile());
+        model.addAttribute(item);
         model.addAttribute("categories",categoryDao.findAll());
         model.addAttribute("brands",brandDao.findAll());
         return "store/add_item";

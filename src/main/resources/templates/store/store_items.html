@@ -27,7 +27,7 @@
 <nav th:replace="storefragments :: navigation"></nav>
 <!--<form id="searchForm" action="/store/search" method="get">-->
 <form id="searchForm" action="/store/search" method="post">
-    <div class="input-group" style="max-width:40%;margin:10px;">
+    <div class="input-group" style="max-width:40%;margin-top:10px;margin-bottom:10px">
         <!--<input type="text"  class="form-control" th:value="${keyword}"  id="mySearch" onkeyup="javascript:search(this)" placeholder="Search by name, category and brand" style="padding:5px"/>-->
         <input type="text"  class="form-control" name="keyword" placeholder="Search by name, category and brand" style="padding:5px"/>
         <span class="input-group-addon" style="padding:0px;"><button type="submit"  style="height: 32px;border: none;"><i class="glyphicon glyphicon-search"></i></button></span>
@@ -38,6 +38,7 @@
 </div>
 
 <div style="display:flex;flex-wrap: wrap">
+    <h3 th:unless="${items} and ${items.size()}">No Items Found :(</h3>
     <div th:each="item : ${items}" style="margin:10px">
         <div class="card">
             <a th:href="@{'/store/item/edit/'+${item.id}}" class="card-img-top">

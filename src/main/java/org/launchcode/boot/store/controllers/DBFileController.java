@@ -2,6 +2,7 @@ package org.launchcode.boot.store.controllers;
 
 
 import org.launchcode.boot.store.models.UploadFileResponse;
+import org.launchcode.boot.store.models.data.DBFileDao;
 import org.launchcode.boot.store.models.forms.DBFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +12,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,13 @@ public class DBFileController {
     @Autowired
     private org.launchcode.boot.store.services.DBFileStorageService DBFileStorageService;
 
+    @Autowired
+    private DBFileDao fileDao;
+
+    @GetMapping(value = "loadImages")
+    public Iterable<DBFile> loadImages(Model model) {
+        return fileDao.findAll();
+    }
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file)  throws IOException {
         DBFile dbFile = DBFileStorageService.storeFile(file);

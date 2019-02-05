@@ -33,27 +33,6 @@ public class SearchController {
             keywords.add(keyword.toLowerCase());
         }
         session.setAttribute("keywords", keywords);// setting the given keyword to session of list keywords
-
-//        Iterable<Item> items = itemDao.findAll();
-//        List<Item> matchingItems = new ArrayList<>();
-//        if(keyword != null && !keyword.equals("")) {
-//            for (Item item : items) {
-//                if (item.getName().toLowerCase().contains(keyword.toLowerCase())) {
-//                    matchingItems.add(item);
-//                } else if (item.getCategory() != null && item.getCategory().getName().toLowerCase().contains(keyword.toLowerCase())) {
-//                    matchingItems.add(item);
-//                } else if (item.getBrand() != null && item.getBrand().getName().toLowerCase().contains(keyword.toLowerCase())) {
-//                    matchingItems.add(item);
-//                }
-//            }
-//
-//        }
-//        model.addAttribute("items", matchingItems.isEmpty() ? items : matchingItems);
-//        model.addAttribute("user", session.getAttribute("user"));
-//        model.addAttribute("store", session.getAttribute("store"));
-//        model.addAttribute("keywords", session.getAttribute("keywords"));
-//
-//        return "store/store_items";
         return this.search(keywords, model, session);
     }
     @RequestMapping(value = "clear/{keyword}", method = RequestMethod.GET)

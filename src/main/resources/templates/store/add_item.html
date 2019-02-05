@@ -4,86 +4,115 @@
     <meta charset="UTF-8"/>
     <title></title>
 </head>
+<script>
+ $(document).ready(function(){
+    $('#exampleModalCenter').on('show.bs.modal', function (event) {
+      var modal = $(this)
+      $.get( "/store/loadImages")
+      .done(function( images ) {
+         let imageTags = images.map((image) => {
+            return "<img style='margin:3px;height:100px;width:100px' src='/store/item/imageDisplay?id=" + image.id +"'/>";
+         });
+         modal.find('.modal-body')[0].innerHTML = imageTags
+      }).fail(function(e) {
+        console.error("error",e);
+         modal.find('.modal-body')[0].innerHTML = "<span class='error'>Error while getting the images</span>"
+      });
+    })
+});
+
+</script>
 <body class="container">
 <nav th:replace="fragments :: navigation"></nav>
 <h3>Add Item</h3>
-<form method="post" style="max-width:600px;" th:object="${item}">
-    <div class="form-group">
-        <label th:for="name">Name</label>
-        <input class="form-control" th:field="*{name}" required/>
-        <!--<span th:errors="*{name}" class="error"></span>-->
-    </div>
-    <div class="form-group">
-        <label th:for="description">Description</label>
-        <textarea class="form-control" th:field="*{description}" />
-        <!--<span th:errors="*{description}" class="error"></span>-->
-    </div>
-    <div class="form-group">
-        <div class="leftControl">
-            <label th:for="type">Category</label>
-            <select name="categoryId" style="height:35px; width:210px;">
-                <option default value="0">None</option>
-                <option th:each="category : ${categories}"
-                        th:text="${category.name}"
-                        th:value="${category.id}"></option>
-            </select>
-            <a href="/store/category/add" class="btn btn-info" style="float:right">Add</a>
+<form method="post" th:object="${item}">
+    <div style="width:50%;float:left">
+        <div class="form-group">
+            <label th:for="name">Name</label>
+            <input class="form-control" th:field="*{name}" required/>
+            <!--<span th:errors="*{name}" class="error"></span>-->
         </div>
-        <div class="rightControl">
-            <label th:for="type" style="width:200px">Brand</label>
-            <select name="brandId" style="height:35px; width:210px;">
-                <option default value="0">None</option>
-                <option th:each="brand : ${brands}"
-                        th:text="${brand.name}"
-                        th:value="${brand.id}">
-                </option>
-            </select>
-            <a href="/store/brand/add" class="btn btn-info" style="float:right">Add</a>
+        <div class="form-group">
+            <label th:for="description">Description</label>
+            <textarea class="form-control" th:field="*{description}" />
+            <!--<span th:errors="*{description}" class="error"></span>-->
         </div>
-    </div>
-    <div class="form-group">
-        <div class="leftControl">
-            <label th:for="name">Quantity</label>
-            <input class="form-control" th:field="*{quantity}" required/>
+        <div class="form-group">
+            <div class="leftControl">
+                <label th:for="type">Category</label>
+                <select name="categoryId" style="height:35px; width:190px;">
+                    <option default value="0">None</option>
+                    <option th:each="category : ${categories}"
+                            th:text="${category.name}"
+                            th:value="${category.id}"></option>
+                </select>
+                <a href="/store/category/add" class="btn btn-info" style="float:right">Add</a>
+            </div>
+            <div class="rightControl">
+                <label th:for="type" style="width:200px">Brand</label>
+                <select name="brandId" style="height:35px; width:190px;">
+                    <option default value="0">None</option>
+                    <option th:each="brand : ${brands}"
+                            th:text="${brand.name}"
+                            th:value="${brand.id}">
+                    </option>
+                </select>
+                <a href="/store/brand/add" class="btn btn-info" style="float:right">Add</a>
+            </div>
         </div>
-        <div class="rightControl">
-            <label th:for="name">Price</label>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" style="padding: 0px 7px;font-size: 18px;">$</span>
-                    <input class="form-control" th:field="*{price}" aria-label="Amount (to the nearest dollar)" required/>
-                </div>
+        <div class="form-group">
+            <div class="leftControl">
+                <label th:for="name">Quantity</label>
+                <input class="form-control" th:field="*{quantity}" required/>
+            </div>
+            <div class="rightControl">
+                <label th:for="name">Price</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="padding: 0px 7px;font-size: 18px;">$</span>
+                        <input class="form-control" th:field="*{price}" aria-label="Amount (to the nearest dollar)" required/>
+                    </div>
 
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="leftControl">
+                <label th:for="name">Aisle</label>
+                <input class="form-control" th:field="*{aisle}" required/>
+            </div>
+            <div class="rightControl">
+                <label th:for="name">Expiration Date</label>
+                <input class="form-control" th:field="*{expirationDate}" required/>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Add Item" />
+        <a href="/store/list" style="margin-left:20px">Cancel</a>
+    </div>
+    <div style="width:40%; float:right">
+        <div>
+            <img th:unless="${item.image.id == 0}" th:src="@{'/store/item/imageDisplay?id=' + ${item.image.id}}" style="width:100%;height:100%;"/>
+        </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" data-whatever="@mdo">Upload Image</button>
+    </div>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Select Image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Select</button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="leftControl">
-            <label th:for="name">Aisle</label>
-            <input class="form-control" th:field="*{aisle}" required/>
-        </div>
-        <div class="rightControl">
-            <label th:for="name">Expiration Date</label>
-            <input class="form-control" th:field="*{expirationDate}" required/>
-        </div>
-    </div>
-
-    <div>
-        <img href="" title="No Image"/>
-        <a href="/store/item/loadImages" class="btn btn-secondary">Upload Image<a/>
-    </div>
-    <div class="modal-body" style="display:none">
-        <div class="container-fluid">
-            <div class="row" th:each="image: ${images}">
-                <div class="col-md-4">
-                    <img style='height:100px;width:100px' th:src="@{'data:image/png;base64,URL.createObjectURL(' + ${image.data} +')'}"/>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <input type="submit" class="btn btn-primary" value="Add Item" />
-    <a href="/store/list" style="margin-left:20px">Cancel</a>
 </form>
 </body>
 </html>
