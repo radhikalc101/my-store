@@ -42,7 +42,7 @@
     <div th:each="item : ${items}" style="margin:10px">
         <div class="card">
             <a th:href="@{'/store/item/edit/'+${item.id}}" class="card-img-top">
-                <img src="/images/ToorDal.jpg" th:alt="${item.name}" style="width:170px">
+                <img th:src="@{'/store/item/imageDisplay?id=' + ${item.image.id}}" th:alt="${item.name}" style="width:198px">
             </a>
             <div class="card-body">
                 <h4 class="card-title" th:text="${item.name}"></h4>

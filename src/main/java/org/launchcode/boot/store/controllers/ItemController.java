@@ -52,7 +52,6 @@ public class ItemController {
             }
         }
     }
-
     @RequestMapping(value = "add",method = RequestMethod.GET)
     public String addItemForm(Model model){
         Item item = new Item();
@@ -65,7 +64,7 @@ public class ItemController {
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processOfAddItemForm(@ModelAttribute @Valid Item item, Errors errors,
-                                       @RequestParam int categoryId, @RequestParam int brandId, Model model, HttpSession session){
+                                       @RequestParam int categoryId, @RequestParam int brandId, @RequestParam int imageId, Model model, HttpSession session){
         if(errors.hasErrors()){
             model.addAttribute("categories",categoryDao.findAll());
             model.addAttribute("brands",brandDao.findAll());
@@ -78,6 +77,10 @@ public class ItemController {
         if(brandId != 0) {
             Brand selectedBrandName = brandDao.findById(brandId).get();
             item.setBrand(selectedBrandName);
+        }
+        if(imageId != 0) {
+            DBFile image = fileDao.findById(imageId).get();
+            item.setImage(image);
         }
         StoreInfo storeInfo = (StoreInfo) session.getAttribute("store");
         item.setStoreInfo(storeInfo);
@@ -98,10 +101,16 @@ public class ItemController {
     }
 
     @PostMapping(value = "edit")
-    public String editFormProcess(@ModelAttribute @Validated Item item, Errors errors, Model model){
+    public String editFormProcess(@ModelAttribute @Validated Item item, @RequestParam int imageId, Errors errors, Model model, HttpSession session){
         if(errors.hasErrors()){
             return "store/edit_item";
         }
+
+        DBFile image = fileDao.findById(imageId).get();
+        item.setImage(image);
+
+        StoreInfo storeInfo = (StoreInfo) session.getAttribute("store");
+        item.setStoreInfo(storeInfo);
         itemDao.save(item);
 
         return "redirect:/store/list";

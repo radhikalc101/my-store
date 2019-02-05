@@ -167,6 +167,7 @@ public class Item {
                 ", brand=" + brand +
                 ", isPublished=" + isPublished +
                 ", store=" + storeInfo.getName() +
+                ", imageId=" + image.getId() +
                 '}';
     }
 }

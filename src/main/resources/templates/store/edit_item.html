@@ -11,13 +11,20 @@
       $.get( "/store/loadImages")
       .done(function( images ) {
          let imageTags = images.map((image) => {
-            return "<img style='margin:3px;height:100px;width:100px' src='/store/item/imageDisplay?id=" + image.id +"'/>";
+            return "<label><input type='radio' name='selectedImage' value='"+image.id+"'/><img style='margin:3px;height:100px;width:100px' src='/store/item/imageDisplay?id=" + image.id +"'/></label>";
          });
          modal.find('.modal-body')[0].innerHTML = imageTags
       }).fail(function(e) {
         console.error("error",e);
          modal.find('.modal-body')[0].innerHTML = "<span class='error'>Error while getting the images</span>"
       });
+    })
+    $("#selectImage").on('click', function (event) {
+         let selectedImageId = $('input:radio[name="selectedImage"]:checked').val();
+         console.log(selectedImageId)
+         $('#imageId').val(selectedImageId)
+         $('#exampleModalCenter').modal('hide');
+         $('#itemImage').attr("src","/store/item/imageDisplay?id="+selectedImageId);
     })
 });
 
@@ -90,30 +97,30 @@
     </div>
     <div style="width:40%; float:right">
         <div>
-            <img th:unless="${image}" th:src="@{'/store/item/imageDisplay?id=' + ${item.image.id}}" style="width:100%;height:100%;"/>
+            <img id="itemImage" th:src="@{'/store/item/imageDisplay?id=' + ${item.image.id}}" style="width:100%;height:100%;"/>
+            <input type="hidden" name="imageId" id="imageId"/>
         </div>
-        <!--<a href="/store/item/loadImages" class="btn btn-secondary" style="margin-top:20px">Update Image</a>-->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="margin-top:20px">Upload Image</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" data-whatever="@mdo" style="margin-top:20px">Select Image</button>
     </div>
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Select Image</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Select</button>
-                </div>
+</form>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Select Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="selectImage" class="btn btn-primary">Select</button>
             </div>
         </div>
     </div>
-</form>
+</div>
 
 </body>
 </html>
