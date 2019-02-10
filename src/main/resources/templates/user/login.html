@@ -4,52 +4,82 @@
     <meta charset="UTF-8"/>
     <title>My Store</title>
 </head>
+
+<style>
+.mySlides {display:none;}
+</style>
+<script>
+ let slideIndex = 0;
+ $(document).ready(function(){
+       carousel();
+     });
+
+
+function carousel() {
+  let i;
+  let x = $(".mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > x.length) {slideIndex = 1}
+  x[slideIndex-1].style.display = "block";
+  setTimeout(carousel, 2000); // Change image every 2 seconds
+}
+</script>
 <body class="container">
-<div id="message">
-    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
-        <span th:text="${errorMessage}"/>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-</div>
+<!--<div id="message">-->
+    <!--<div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">-->
+        <!--<span th:text="${errorMessage}"/>-->
+        <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+            <!--<span aria-hidden="true">&times;</span>-->
+        <!--</button>-->
+    <!--</div>-->
+<!--</div>-->
 <nav th:replace="fragments :: navigation"></nav>
-
-<form id="form1" method="post" style="max-width:500px;">
-
-        <!--<label th:for="email">Email</label>-->
-        <!--<input class="form-control" name="email" type="email" required/>-->
-    <div class="form-group">
-        <div class="input-group">
+<div style="display:flex;margin-top:20px">
+    <div style="float:left;width:40%">
+        <form id="form1" method="post" style=";border: 1px solid;border-radius: 5px;padding: 10px;height: 400px;">
+            <h2 style="text-align:center">Login</h2>
+            <!--<label th:for="email">Email</label>-->
+            <!--<input class="form-control" name="email" type="email" required/>-->
+            <div class="form-group" style="margin:30px">
+                <div class="input-group">
             <span class="input-group-addon">
-                <i class="fa fa-user loginIcon" aria-hidden="true"></i>
+                <i class="fa fa-user loginIcon store-color" aria-hidden="true" style="border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px"></i>
             </span>
 
-            <input type="email" class="form-control" name="email" placeholder="Email" required/>
-        </div>
+                    <input type="email" class="form-control" name="email" placeholder="Email" required/>
+                </div>
+            </div>
+            <div class="form-group" style="margin:30px">
+                <!--<label th:for="password">Password</label>-->
+                <!--<input class="form-control" name="password" type="password" required/>-->
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-lock loginIcon store-color" aria-hidden="true" style="border-top-left-radius:4px;border-bottom-left-radius: 4px" ></i>
+                    </span>
+                    <input type="password" class="form-control" name="password" placeholder="Password" required/>
+                </div>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert" style="margin:30px;padding: 5px;">
+                <span th:text="${errorMessage}"/>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding-right: 5px;padding-top: 2px;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="form-group" style="margin:30px;bottom:10px">
+                <a href="/store/forgotpwd" class="store-color">Forgot Password?</a>
+                <button type="submit" class="btn btn-store" style="float:right"><i class="glyphicon glyphicon-log-in"></i> Log In</button>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <!--<label th:for="password">Password</label>-->
-        <!--<input class="form-control" name="password" type="password" required/>-->
-
-    <div class="input-group">
-        <span class="input-group-addon">
-            <i class="fa fa-lock loginIcon" aria-hidden="true" ></i>
-        </span>
-        <input type="password" class="form-control" name="password" placeholder="Password" required/>
+    <div style="float:right;width:60%;margin-left:20px">
+        <img class="mySlides" th:src=@{/images/grocery-stores-open-thanksgiving.jpg} style="width:100%;height:100%"/>
+        <img class="mySlides" th:src=@{/images/Fruits.jpg} style="width:100%;height:100%"/>
+        <img class="mySlides" th:src=@{/images/enjoy-the-store-1.jpeg} style="width:100%;height:100%"/>
     </div>
-    </div>
-
-    <div class="form-group">
-        <input type="checkbox"/>
-        <label th:for="remember-me">Remember Me</label>
-        <button type="submit" class="btn btn-primary" style="float:right"><i class="glyphicon glyphicon-log-in"></i> Log In</button>
-    </div>
-    <div class="pwd">
-        <a href="/store/forgotpwd">Forgot Password? |</a>
-        <a href="/store/signup">Sign Up</a>
-    </div>
-
-</form>
+</div>
 </body>
 </html>

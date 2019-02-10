@@ -189,7 +189,7 @@ public class OwnerAccountInfo {
         sb.append("firstName:").append(firstName).append("\n")
                 .append("lastname:").append(lastName).append("email:").append(email).append("password:")
                 .append(password).append("phoneNumber:").append(phoneNumber).append("gender:").append(gender)
-                .append("dateOfBirth:").append(dateOfBirth).append("creationDateTime:").append(creationDateTime);
+                .append("dateOfBirth:").append(dateOfBirth).append("creationDateTime:").append(creationDateTime).append("address:").append(ownerAddress.toString());
         return sb.toString();
     }
 }

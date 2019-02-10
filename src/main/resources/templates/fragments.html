@@ -4,7 +4,12 @@
     <meta charset="UTF-8"/>
     <title>My Store</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/checkbox.css}" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">-->
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap-glyphicons.min.css">-->
@@ -15,19 +20,53 @@
     <script th:src="@{/js/auto-complete/autoComplete.js}" ></script>
     <script th:src="@{/js/auto-complete/States.js}" ></script>
     <script th:src="@{/js/auto-complete/Cities.js}" ></script>
+
 </head>
 <body>
-<nav th:fragment="navigation">
-    <div style="display:flex;width:100%">
-        <div style="width:80%">
-            <h2>My Store</h2>
+
+    <nav th:fragment="navigation" class="navbar navbar-expand-lg storeNavBar" >
+        <a class="navbar-brand" href="/store/list" style="color:#cbbde2">My Store</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <h3 class="navbar-nav mr-auto"><span th:if="${session.store}" th:text="${session.store.name}" style="color:#ede8f4"></span></h3>
+
+            <form class="form-inline my-2 my-lg-0">
+                <ul class="navbar-nav mr-auto" th:if="${session.user}">
+                    <li class="nav-item dropdown" >
+                        <a class="nav-link dropdown-toggle store-foreground-color " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Add
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/store/brand/add">Brand</a>
+                            <a class="dropdown-item" href="/store/category/add">Category</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/store/item/add">Item</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="divider-vertical" th:if="${session.user}"></div>
+                <ul class="navbar-nav mr-auto" th:unless="${session.user}"><a href="/store/signup" style="color:#cbbde2">Sign Up</a></ul>
+                <ul class="navbar-nav mr-auto" th:if="${session.user}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#cbbde2">
+                            <i class="fa fa-user"></i> <span th:text="${session.user}"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/store/brand/add">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/store/logout">Log Out</a>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+
         </div>
-        <div style="float:right;">
-            <h3><a href="/store/login">Home</a></h3>
-        </div>
-    </div>
-    <hr/>
-</nav>
+    </nav>
 
 </body>
 </html>

@@ -37,6 +37,7 @@ public class DBFileController {
     public Iterable<DBFile> loadImages(Model model) {
         return fileDao.findAll();
     }
+    
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file)  throws IOException {
         DBFile dbFile = DBFileStorageService.storeFile(file);

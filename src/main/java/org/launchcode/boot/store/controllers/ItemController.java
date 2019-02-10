@@ -39,7 +39,6 @@ public class ItemController {
 
     @RequestMapping(value = "/imageDisplay", method = RequestMethod.GET)
     public void showImage(@RequestParam("id") Integer imageId, HttpServletResponse response) {
-        System.out.println(imageId);
         if(imageId != 0) {
             DBFile image = fileDao.findById(imageId).get();
             response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
@@ -53,13 +52,16 @@ public class ItemController {
         }
     }
     @RequestMapping(value = "add",method = RequestMethod.GET)
-    public String addItemForm(Model model){
-        Item item = new Item();
-        item.setImage(new DBFile());
-        model.addAttribute(item);
-        model.addAttribute("categories",categoryDao.findAll());
-        model.addAttribute("brands",brandDao.findAll());
-        return "store/add_item";
+    public String addItemForm(Model model,HttpSession session){
+        if(session.getAttribute("user")!= null){
+            Item item = new Item();
+            item.setImage(new DBFile());
+            model.addAttribute(item);
+            model.addAttribute("categories",categoryDao.findAll());
+            model.addAttribute("brands",brandDao.findAll());
+            return "redirect:/store/add_item";
+        }
+        return "redirect:/store/login";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -115,19 +117,22 @@ public class ItemController {
 
         return "redirect:/store/list";
     }
-// deleting the item form list of items using itemId
+    // deleting the item form list of items using itemId
     @RequestMapping(value = "delete/{itemId}", method = RequestMethod.GET)
-    public String deleteItem(Model model,@PathVariable int itemId){
-            itemDao.deleteById(itemId);
+    public String deleteItem(Model model,@PathVariable int itemId, HttpSession session){
+        itemDao.deleteById(itemId);
+        if(session.getAttribute("email") != null && session.getAttribute("store") != null) {
+            StoreInfo storeInfo = (StoreInfo) session.getAttribute("store");
+            model.addAttribute("items",itemDao.findByStoreInfo(storeInfo));
+//            model.addAttribute("user",session.getAttribute("user") );
+//            model.addAttribute("store", storeInfo);
+//            model.addAttribute("keyword", "");
+            model.addAttribute("keywords", session.getAttribute("keywords"));
+            return "store/cards :: itemCards";
+        } else {
+            return "redirect:/store/logout";
+        }
 
-        return "redirect:/store/list";
     }
-    @RequestMapping(value = "publish/{id}", method = RequestMethod.GET)
-    public String publishItem(Model model,@PathVariable int id){
-       System.out.println(id);
-        Item item = itemDao.findById(id).get();
-        item.setPublished(!item.isPublished());
-        itemDao.save(item);
-        return "redirect:/store/list";
-    }
+
 }

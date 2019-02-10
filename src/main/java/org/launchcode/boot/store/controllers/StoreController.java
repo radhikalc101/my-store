@@ -61,8 +61,9 @@ public class StoreController {
     }
 
     @RequestMapping(value = "login",method = RequestMethod.GET)
-    public String displayLoginForm(Model model){
-        model.addAttribute("errorMessage","");
+    public String displayLoginForm(Model model, HttpSession session){
+        model.addAttribute("errorMessage",null);
+        this.clear(session);
         return "user/login";//rendering to template giving the path login.html file in the user directory
 
     }
@@ -83,12 +84,15 @@ public class StoreController {
         }
 
     }
-    @RequestMapping(value = "logout")
-    public String logout(Model model, HttpSession session){
+    private void clear(HttpSession session){
         session.removeAttribute("user");
         session.removeAttribute("store");
         session.removeAttribute("email");
         session.removeAttribute("keywords");
+    }
+    @RequestMapping(value = "logout")
+    public String logout(Model model, HttpSession session){
+        this.clear(session);
         return "redirect:/store/login";
 
     }

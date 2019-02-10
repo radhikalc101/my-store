@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>
+<body>
+    <div th:fragment="itemCards" id="items-block">
+        <div th:each="keyword : ${keywords}" class="chip" style="border: 1px solid #523482; line-height:24px">
+            <span th:text="${keyword}" /><a class="closebtn" th:id="${keyword}"  th:onclick=@{'javascript:clearSearch(\''+${keyword}+'\');'}>&times;</a>
+        </div>
+        <div style="display:flex;flex-wrap: wrap">
+            <h3 th:unless="${items} and ${items.size()}">No Items Found :(</h3>
+            <div th:each="item : ${items}" style="margin:10px">
+                <div class="card" style="border:1px solid #523482;">
+                    <div class="card-body">
+                        <div class="cardLeftControl">
+                            <a th:href="@{'/store/item/edit/'+${item.id}}" class="card-img-top">
+                                <img th:src="@{'/store/item/imageDisplay?id=' + ${item.image.id}}" th:alt="${item.name}" style="width:145px;height:143px;margin:2px">
+                            </a>
+                        </div>
+                        <div class="cardRightControl" style="height: 150px">
+                            <div class="store-chip">
+                                <span th:id="${item.id}" th:text="${item.name}"></span>
+                            </div>
+                            <a th:onclick=@{'javascript:deleteItem('+${item.id}+');'} style="cursor:pointer;">
+                                <!--<a th:href="@{'/store/item/delete/' + ${item.id}}" >-->
+                                <span class="cardCloseBtn" aria-hidden="true">&times;</span>
+                            </a>
+                            <div style="font-size:13px">
+                                <div>
+                                    <div style="display:flex">
+                                        <div class="col-md-6 col-sm-10" style="font-weight:bold">
+                                            Price
+                                        </div>
+                                        <div class="col-md-7 col-sm-12" style="font-weight:bold">
+                                            Qty
+                                        </div>
+                                    </div>
+                                    <div style="display:flex">
+                                        <div class="col-md-6 col-sm-10">
+                                            $<span th:text="${item.price}"></span>
+                                        </div>
+                                        <div class="col-md-7 col-sm-12">
+                                            <span th:text="${item.quantity}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div style="display:flex">
+                                        <div class="col-md-6 col-sm-10" style="font-weight:bold">
+                                            Brand
+                                        </div>
+                                        <div class="col-md-7 col-sm-12" style="font-weight:bold">
+                                            Category
+                                        </div>
+                                    </div>
+                                    <div style="display:flex">
+                                        <div class="col-md-6 col-sm-10">
+                                            <span th:text="${item.brand.name}"></span>
+                                        </div>
+                                        <div class="col-md-7 col-sm-12">
+                                            <span th:text="${item.category.name}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label style="float:right;width: 40px;">
+                                <!--<input  class="label__checkbox" type="checkbox" th:checked="${item.published}" th:onclick="'window.location.href=\'' + @{/store/item/publish/{id}(id=${item.id})} + '\''"/>-->
+                                <input  class="label__checkbox" type="checkbox" th:id="${item.id}" th:checked="${item.published}" th:onclick="'javascript:publish('+${item.id}+');'"/>
+                                <span class="label__text">
+                                          <span class="label__check">
+                                            <i class="fa fa-check icon"></i>
+                                          </span>
+                                        </span>
+                            </label>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
