@@ -4,10 +4,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@SequenceGenerator(name="itemSeq", initialValue=1, allocationSize=100)
 public class Item {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "itemSeq")
     private int id;
 
     @NotNull

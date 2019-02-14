@@ -39,7 +39,7 @@ function carousel() {
 <nav th:replace="fragments :: navigation"></nav>
 <div style="display:flex;margin-top:20px">
     <div style="float:left;width:40%">
-        <form id="form1" method="post" style=";border: 1px solid;border-radius: 5px;padding: 10px;height: 400px;">
+        <form id="form1" method="post" style=";border: 1px solid;border-radius: 5px;padding: 10px;height: 500px;">
             <h2 style="text-align:center">Login</h2>
             <!--<label th:for="email">Email</label>-->
             <!--<input class="form-control" name="email" type="email" required/>-->
@@ -82,4 +82,7 @@ function carousel() {
     </div>
 </div>
 </body>
+
+<div th:replace="footer :: copyright"></div>
+
 </html>

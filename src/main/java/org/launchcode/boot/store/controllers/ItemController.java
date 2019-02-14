@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 
 @Controller
@@ -43,7 +45,6 @@ public class ItemController {
             DBFile image = fileDao.findById(imageId).get();
             response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
             try {
-                System.out.println(image);
                 response.getOutputStream().write(image.getData());
                 response.getOutputStream().close();
             } catch (IOException e) {
@@ -59,7 +60,7 @@ public class ItemController {
             model.addAttribute(item);
             model.addAttribute("categories",categoryDao.findAll());
             model.addAttribute("brands",brandDao.findAll());
-            return "redirect:/store/add_item";
+            return "store/add_item";
         }
         return "redirect:/store/login";
     }

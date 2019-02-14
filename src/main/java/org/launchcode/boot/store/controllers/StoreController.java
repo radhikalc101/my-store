@@ -9,6 +9,7 @@ package org.launchcode.boot.store.controllers;
 import org.launchcode.boot.store.models.data.*;
 import org.launchcode.boot.store.models.forms.*;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -71,6 +72,8 @@ public class StoreController {
     public String processLoginForm(@RequestParam String email, @RequestParam String password, Model model, HttpSession session){// here the given param names should match in the form in the lable tag 'name' field
         OwnerAccountInfo ownerAccountInfo = ownerAccountInfoDao.findByEmail(email);//here first we are getting the email from the DB
         model.addAttribute("errorMessage","");
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        String hashedPassword = passwordEncoder.encode(password);
         if(ownerAccountInfo != null && password.equals(ownerAccountInfo.getPassword())){ // here checking the given password matches to the pwd in the DB
             StoreInfo storeInfo = storeInfoDao.findByOwnerAccountInfo(ownerAccountInfo); // here getting the owner object Id ( all field details) from DB
             String userFullName = ownerAccountInfo.getFirstName()+" "+ ownerAccountInfo.getLastName();//getting the user full name to print on view page list.
@@ -132,7 +135,9 @@ public class StoreController {
         String email = store.getOwnerAccountInfo().getEmail();
         String pwd = store.getOwnerAccountInfo().getPassword();
         if(email != null && confirmEmail !=null && email.equals(confirmEmail) && pwd != null && confirmPassword != null && pwd.equals(confirmPassword)){//checing the confirm Email and Password with the given Email and Password in the form
-
+//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//            String hashedPassword = passwordEncoder.encode(pwd);
+//            store.getOwnerAccountInfo().setPassword(hashedPassword);
             Timestamp currentDateTime = new Timestamp(System.currentTimeMillis());// creating a new TimeStamp object for to use in our creationDateTime and updatedDateTime fields used in all tables
             store.setCreationDateTime(currentDateTime);// in the store object is already here so i'm setting the new TimeStamp object to the store object here
             store.setUpdatedDateTime(currentDateTime);

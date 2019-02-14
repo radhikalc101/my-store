@@ -63,6 +63,10 @@ hr {
 .storeNavBar {
     background-color:#523482 !important;
     color:#cbbde2 !important;
+    position: fixed !important;
+    z-index: 1050;
+    top: 0;
+    width: 78%;
     }
 
 .divider-vertical {
@@ -79,7 +83,7 @@ hr {
 
 }
 .storeDetails{
-    float:left;
+    text-align:center;
     width:45%;
 }
 .ownerDetails{
@@ -150,8 +154,8 @@ th {
     font-size: 24px;
 }
 
-.container1 {
-  padding: 2px 16px;
+.container {
+  margin-top:60px;
 }
 
 .chip {
@@ -216,6 +220,7 @@ th {
     background-color: #523482 !important;
     border-color: #523482 !important;
    }
+   /* item name overflow styles*/
 .store-chip {
     display: inline-block;
     padding: 0 8px;
@@ -227,4 +232,69 @@ th {
     color: #ede8f4 !important;
     margin-top:3px !important;
     margin-bottom:3px !important;
+    max-width: 155px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: default;
+}
+/* brand and cat name overflow styles*/
+
+.textOverFlow{
+    max-width: 155px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: default;
+}
+
+.footer {
+    background: #523482;
+    color:#ede8f4;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    width: 78%;
+}
+
+/*profile page styles*/
+.flip-box {
+  background-color: transparent;
+  width: 400px;
+  height: 300px;
+  border: 1px solid #f1f1f1;
+  perspective: 1000px;
+}
+
+.flip-box-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-box:hover .flip-box-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-box-front, .flip-box-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.flip-box-front {
+  background-color: #ede8f4;
+  color: #523482;
+  text-align:center;
+}
+
+.flip-box-back {
+  background-color: #523482;
+  color:  #ede8f4;
+  transform: rotateY(180deg);
+  text-align:center;
 }

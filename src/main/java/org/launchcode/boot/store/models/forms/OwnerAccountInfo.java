@@ -6,9 +6,10 @@ import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 @Entity
+@SequenceGenerator(name="acctSeq", initialValue=1, allocationSize=100)
 public class OwnerAccountInfo {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "acctSeq")
     private int id;
     @NotNull
     private String firstName;

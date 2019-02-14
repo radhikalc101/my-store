@@ -1,16 +1,15 @@
 package org.launchcode.boot.store.models.forms;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
+@SequenceGenerator(name="addrSeq", initialValue=1, allocationSize=100)
 public class Address {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "addrSeq")
     private int id;
 
     @NotNull

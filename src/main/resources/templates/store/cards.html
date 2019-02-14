@@ -14,11 +14,11 @@
                     <div class="card-body">
                         <div class="cardLeftControl">
                             <a th:href="@{'/store/item/edit/'+${item.id}}" class="card-img-top">
-                                <img th:src="@{'/store/item/imageDisplay?id=' + ${item.image.id}}" th:alt="${item.name}" style="width:145px;height:143px;margin:2px">
+                                <img th:src="${item.image} ? @{'/store/item/imageDisplay?id=' + ${item.image.id}} : @{/images/no-image-available.jpg}" th:alt="${item.name}" style="width:145px;height:143px;margin:2px">`
                             </a>
                         </div>
                         <div class="cardRightControl" style="height: 150px">
-                            <div class="store-chip">
+                            <div class="store-chip" th:title="${item.name}">
                                 <span th:id="${item.id}" th:text="${item.name}"></span>
                             </div>
                             <a th:onclick=@{'javascript:deleteItem('+${item.id}+');'} style="cursor:pointer;">
@@ -54,11 +54,11 @@
                                         </div>
                                     </div>
                                     <div style="display:flex">
-                                        <div class="col-md-6 col-sm-10">
+                                        <div class="col-md-6 col-sm-10 textOverFlow" th:title="${item.brand.name}">
                                             <span th:text="${item.brand.name}"></span>
                                         </div>
-                                        <div class="col-md-7 col-sm-12">
-                                            <span th:text="${item.category.name}"></span>
+                                        <div class="col-md-7 col-sm-12 textOverFlow" th:title="${item.category.name}">
+                                            <span  th:text="${item.category.name}"></span>
                                         </div>
                                     </div>
                                 </div>
