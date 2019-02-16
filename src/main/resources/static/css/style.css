@@ -298,3 +298,11 @@ th {
   transform: rotateY(180deg);
   text-align:center;
 }
+
+.chooseFile {
+    width: 286px;
+    border: 1px solid transparent;
+    background-color: #f1f1f1;
+    padding: 4px;
+    font-size: 14px;
+ }
