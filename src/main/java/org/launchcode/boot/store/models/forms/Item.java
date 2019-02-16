@@ -58,6 +58,7 @@ public class Item {
         this.isPublished = false;
         this.storeInfo = storeInfo;
         this.image = image;
+
     }
 
     public int getId() {
@@ -147,7 +148,6 @@ public class Item {
     public void setStoreInfo(StoreInfo storeInfo) {
         this.storeInfo = storeInfo;
     }
-
     public DBFile getImage() {
         return image;
     }
@@ -155,7 +155,6 @@ public class Item {
     public void setImage(DBFile image) {
         this.image = image;
     }
-
     @Override
     public String toString() {
         return "Item{" +
