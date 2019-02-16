@@ -1,73 +1,82 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://>www.thymeleaf.org/">
-<head th:replace="storefragments :: head">
+<!--<head th:replace="storefragments :: head">-->
+<head th:replace="fragments :: head">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!--<meta name="viewport" content="width=device-width, initial-scale=1"/>-->
     <title>My Store</title>
-    <script type="text/javascript" language="JavaScript">
-        jQuery.noConflict();
-         // Use jQuery via jQuery() instead of via $()
-         jQuery(document).ready(function(){
-           <!--jQuery("#publish").bootstrapToggle({-->
-              <!--on: 'Published',-->
-              <!--off: 'Un-Published'-->
-            <!--});-->
-            jQuery("#publish").onChange(function(){
-                alert('publishing')
-            });
-         });
-         function publish(event, itemId){
-            alert('publishing')
-            window.location.href='/store/item.publish/'+itemId;
-         }
 
-</script>
 </head>
-<body class="container">
-<nav th:replace="storefragments :: navigation"></nav>
-<!--<form id="searchForm" action="/store/search" method="get">-->
-<form id="searchForm" action="/store/search" method="post">
-    <div class="input-group" style="max-width:40%;margin:10px;">
-        <!--<input type="text"  class="form-control" th:value="${keyword}"  id="mySearch" onkeyup="javascript:search(this)" placeholder="Search by name, category and brand" style="padding:5px"/>-->
-        <input type="text"  class="form-control" name="keyword" placeholder="Search by name, category and brand" style="padding:5px"/>
-        <span class="input-group-addon" style="padding:0px;"><button type="submit"  style="height: 32px;border: none;"><i class="glyphicon glyphicon-search"></i></button></span>
-    </div>
-</form>
-<div th:each="keyword : ${keywords}" class="chip">
-    <span th:text="${keyword}" /><a class="closebtn" th:href="@{'/store/search/clear/' + ${keyword}}" onclick="this.parentElement.style.display='none'">&times;</a>
-</div>
+<script type="text/javascript" language="JavaScript">
 
-<div style="display:flex;flex-wrap: wrap">
-    <div th:each="item : ${items}" style="margin:10px">
-        <div class="card">
-            <a th:href="@{'/store/item/edit/'+${item.id}}" class="card-img-top">
-                <img src="/images/ToorDal.jpg" th:alt="${item.name}" style="width:170px">
-            </a>
-            <div class="card-body">
-                <h4 class="card-title" th:text="${item.name}"></h4>
-                <table>
-                    <tr>
-                        <td>Price:$<span th:text="${item.price}"></span> <span style="margin-left:20px"> Qty:</span><span th:text="${item.quantity}"></span></td>
-                    </tr>
-                    <tr>
-                        <td th:if="${item.brand}">Brand: <span th:text="${item.brand.name}"></span></td>
-                    </tr>
-                    <tr>
-                        <td th:if="${item.category}">Category: <span th:text="${item.category.name}"></span></td>
-                    </tr>
-                </table>
-                <div>
-                    <span>Published : </span>
-                    <input type="checkbox" id="publish" th:checked="${item.published}" th:onchange="'window.location.href=\'' + @{/store/item/publish/{id}(id=${item.id})} + '\''" data-toggle="toggle" data-size="mini">
-                    <!--<input type="checkbox" id="publish" th:checked="${item.published}" th:onchange="@{'javascript:publish('+${item.id}+')'}" data-toggle="toggle" data-size="mini">-->
-                    <a style="margin-left:35px;" class="closeBtn" th:href="@{'/store/item/delete/' + ${item.id}}">
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
+     $(document).ready(function(){
+        search()
+        $("#keyword").on('keyup', function (e) {
+            if (e.keyCode == 13) {
+                search()
+            }
+        });
+     });
+     function publish(itemId){
+        $.get( "/store/item/publish/"+itemId)
+          .done(function( id ) {
+            $(''+itemId).checked=true;
+          }).fail(function(e) {
+            console.error("error",e);
+            $(''+itemId).checked=false;
+          });
+     }
+     function search(){
+        const keyword = $('#keyword').val();
+        $('#keyword').val('');
+        console.log(keyword);
+        let url = '/store/search'
+        if(keyword){
+            url = url +'/'+ keyword
+        }
+       $('#itemsBlock').load(url);
+      }
+     function clearSearch(searchWord){
+        $('#' + searchWord).parent().css("display",'none');
+        let url = '/store/search/clear'
+        if(searchWord){
+            url = url +'/' + searchWord;
+        }
+       $('#itemsBlock').load(url);
+     }
+     function deleteItem(itemId){
+        const name = $('#'+itemId).text();
+        const canDelete = confirm("Are you sure, do you want delete "+name);
+        if(canDelete){
+            let url = '/store/item/delete'
+            if(itemId){
+                url = url +'/' + itemId;
+            }
+           $('#itemsBlock').load(url);
+        }
+     }
+</script>
+<body class="container">
+<nav th:replace="fragments :: navigation"></nav>
+<!--<form id="searchForm" action="/store/search" method="get">-->
+<!--<form id="searchForm" action="/store/search" method="post">-->
+
+
+<div class="input-group" style="max-width:40%;margin-top:10px;margin-bottom:10px">
+        <input type="text"  class="form-control" id="keyword" placeholder="Search by name, category and brand" style="border-color: #523482;padding:5px"/>
+        <span class="input-group-addon" style="padding:0px;">
+            <button class="btn btn-store" th:onclick=@{'javascript:search()'} style="height: 38px;border-top-left-radius: 0px;border-bottom-left-radius: 0px;cursor:pointer" >
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
     </div>
+<!--</form>-->
+
+
+<div id="itemsBlock" style="margin-bottom:20px">
+
 </div>
 
 </body>
+<div th:replace="footer :: copyright"></div>
 </html>

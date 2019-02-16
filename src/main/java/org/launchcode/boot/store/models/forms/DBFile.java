@@ -6,9 +6,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "files")
+@SequenceGenerator(name="imageSeq", initialValue=1, allocationSize=100)
 public class DBFile {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "imageSeq")
     private int id;
 
     private String fileName;

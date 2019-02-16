@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@SequenceGenerator(name="catSeq", initialValue=1, allocationSize=100)
 public class Category {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "catSeq")
     @Id
     private int id;
 

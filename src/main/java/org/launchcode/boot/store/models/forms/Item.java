@@ -4,10 +4,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@SequenceGenerator(name="itemSeq", initialValue=1, allocationSize=100)
 public class Item {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "itemSeq")
     private int id;
 
     @NotNull
@@ -40,9 +41,12 @@ public class Item {
     @NotNull
     private String expirationDate;
 
+    @OneToOne
+    private DBFile image;
+
     public Item(){}
     public Item(String name, String description, int quantity, float price, Category category, Brand brand,
-                int aisle,String expirationDate, StoreInfo storeInfo){
+                int aisle,String expirationDate, StoreInfo storeInfo, DBFile image){
         this.name = name;
         this.description = description;
         this.price = price;
@@ -53,6 +57,7 @@ public class Item {
         this.expirationDate = expirationDate;
         this.isPublished = false;
         this.storeInfo = storeInfo;
+        this.image = image;
     }
 
     public int getId() {
@@ -143,6 +148,14 @@ public class Item {
         this.storeInfo = storeInfo;
     }
 
+    public DBFile getImage() {
+        return image;
+    }
+
+    public void setImage(DBFile image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -155,6 +168,7 @@ public class Item {
                 ", brand=" + brand +
                 ", isPublished=" + isPublished +
                 ", store=" + storeInfo.getName() +
+                ", imageId=" + image.getId() +
                 '}';
     }
 }

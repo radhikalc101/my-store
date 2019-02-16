@@ -1,16 +1,15 @@
 package org.launchcode.boot.store.models.forms;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
+@SequenceGenerator(name="addrSeq", initialValue=1, allocationSize=100)
 public class Address {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "addrSeq")
     private int id;
 
     @NotNull
@@ -25,8 +24,8 @@ public class Address {
 
     @NotNull
     private int zipcode;
-    @NotNull
-    private String country;
+
+    private String country = "United States";
 
     private Timestamp creationDateTime;
 
@@ -36,13 +35,12 @@ public class Address {
     public Address(){}
 
     // constructor
-    public Address(String addressLine1,String addressLine2,String city,String state,int zipcode,String country, Timestamp creationDateTime, Timestamp updatedDateTime){
+    public Address(String addressLine1,String addressLine2,String city,String state,int zipcode, Timestamp creationDateTime, Timestamp updatedDateTime){
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
-        this.country = country;
         this.creationDateTime = creationDateTime;
         this.updatedDateTime = updatedDateTime;
     }
@@ -74,9 +72,6 @@ public class Address {
         this.zipcode = zipcode;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
 
     public void setCreationDateTime(Timestamp creationDateTime) {
         this.creationDateTime = creationDateTime;

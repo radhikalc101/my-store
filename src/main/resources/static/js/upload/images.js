@@ -6,7 +6,7 @@ var singleFileUploadError = document.querySelector('#singleFileUploadError');
 var singleFileUploadSuccess = document.querySelector('#singleFileUploadSuccess');
 
 var multipleUploadForm = document.querySelector('#multipleUploadForm');
-var multipleFileUploadInput = document.querySelector('#multipleFileUploadInput');
+//var multipleFileUploadInput = document.querySelector('#multipleFileUploadInput');
 var multipleFileUploadError = document.querySelector('#multipleFileUploadError');
 var multipleFileUploadSuccess = document.querySelector('#multipleFileUploadSuccess');
 

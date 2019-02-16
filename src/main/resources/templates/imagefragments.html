@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://>www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+    <div th:fragment="imageSelector" style="margin-bottom:30px">
+        <div>
+            <img id="itemImage" th:src="${item.image} and ${item.image.id} ? @{'/store/item/imageDisplay?id=' + ${item.image.id}} : @{'/store/item/imageDisplay?id=0'}" alt="No Image Selected" style="width:93%;height:30%;"/>
+            <input type="hidden" id="imageId" name="imageId" th:value="${item.image} and ${item.image.id} ? ${item.image.id} : 0"/>
+        </div>
+        <button type="button" class="btn btn-store" th:text="${item.image} and ${item.image.id} ? 'Update Image' : 'Select Image'" data-toggle="modal" data-target="#imageViewer" data-whatever="@mdo" style="margin-top:20px">Update Image</button>
+
+        <div class="modal fade" id="imageViewer" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Select Image</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <div style="margin-right: 2.25rem;">
+                            <input id="multipleFileUploadInput" type="file" name="files" class="chooseFile" multiple />
+                            <button type="button" class="btn btn-store btn-sm" id="uploadImage">Upload</button>
+                        </div>
+                        <!--<button type="button" class="btn btn-store" data-dismiss="modal">Close</button>-->
+                        <button type="button" id="selectImage" class="btn btn-store">Select</button>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function(){
+                    $('#imageViewer').on('show.bs.modal', function (event) {
+                      var modal = $(this)
+                      $.get( "/store/loadImages")
+                      .done(function( images ) {
+                         let imageTags = images.map((image) => {
+                            return "<label><input type='radio' name='selectedImage' value='"+image.id+"'/><img style='margin:3px;height:100px;width:100px' src='/store/item/imageDisplay?id=" + image.id +"'/></label>";
+                         });
+                         modal.find('.modal-body')[0].innerHTML = imageTags.join('')
+                      }).fail(function(e) {
+                        console.error("error",e);
+                         modal.find('.modal-body')[0].innerHTML = "<span class='error'>Error while getting the images</span>"
+                      });
+                    })
+                   $("#selectImage").on('click', function (event) {
+                     let selectedImageId = $('input:radio[name="selectedImage"]:checked').val();
+
+                     $('#imageId').val(selectedImageId)
+                     $('#imageViewer').modal('hide');
+                     $('#itemImage').attr("src","/store/item/imageDisplay?id="+selectedImageId);
+                    })
+                    $("#uploadImage").on('click', function (event) {
+                        let files = multipleFileUploadInput.files;
+                        uploadMultipleFiles(files);
+                        multipleFileUploadInput.value='';
+                        event.preventDefault();
+                    })
+
+                 })
+            </script>
+        </div>
+    </div>
+</body>
+</html>

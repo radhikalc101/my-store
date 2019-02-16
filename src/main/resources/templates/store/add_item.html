@@ -7,70 +7,75 @@
 <body class="container">
 <nav th:replace="fragments :: navigation"></nav>
 <h3>Add Item</h3>
-<form method="post" style="max-width:600px;" th:object="${item}">
-    <div class="form-group">
-        <label th:for="name">Name</label>
-        <input class="form-control" th:field="*{name}" required/>
-        <!--<span th:errors="*{name}" class="error"></span>-->
-    </div>
-    <div class="form-group">
-        <label th:for="description">Description</label>
-        <textarea class="form-control" th:field="*{description}" />
-        <!--<span th:errors="*{description}" class="error"></span>-->
-    </div>
-    <div class="form-group">
-        <div class="leftControl">
-            <label th:for="type">Category</label>
-            <select name="categoryId" style="height:35px; width:210px;">
-                <option default value="0">None</option>
-                <option th:each="category : ${categories}"
-                        th:text="${category.name}"
-                        th:value="${category.id}"></option>
-            </select>
-            <a href="/store/category/add" class="btn btn-primary" style="float:right">Add</a>
+<form method="post" th:object="${item}">
+    <div style="width:50%;float:left">
+        <div class="form-group">
+            <label th:for="name">Name</label>
+            <input class="form-control" th:field="*{name}" required/>
+            <!--<span th:errors="*{name}" class="error"></span>-->
         </div>
-        <div class="rightControl">
-            <label th:for="type" style="width:200px">Brand</label>
-            <select name="brandId" style="height:35px; width:210px;">
-                <option default value="0">None</option>
-                <option th:each="brand : ${brands}"
-                        th:text="${brand.name}"
-                        th:value="${brand.id}">
-                </option>
-            </select>
-            <a href="/store/brand/add" class="btn btn-primary" style="float:right">Add</a>
+        <div class="form-group">
+            <label th:for="description">Description</label>
+            <textarea class="form-control" th:field="*{description}" />
+            <!--<span th:errors="*{description}" class="error"></span>-->
         </div>
-    </div>
-    <div class="form-group">
-        <div class="leftControl">
-            <label th:for="name">Quantity</label>
-            <input class="form-control" th:field="*{quantity}" required/>
-        </div>
-        <div class="rightControl">
-            <label th:for="name">Price</label>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" style="padding: 0px 7px;font-size: 18px;">$</span>
-                    <input class="form-control" th:field="*{price}" aria-label="Amount (to the nearest dollar)" required/>
-                </div>
-
+        <div class="form-group">
+            <div class="leftControl">
+                <label th:for="type">Category</label>
+                <select name="categoryId" style="height:35px; width:190px;">
+                    <option default value="0">None</option>
+                    <option th:each="category : ${categories}"
+                            th:text="${category.name}"
+                            th:value="${category.id}"></option>
+                </select>
+                <a href="/store/category/add" class="btn btn-store" style="float:right">Add</a>
+            </div>
+            <div class="rightControl">
+                <label th:for="type" style="width:200px">Brand</label>
+                <select name="brandId" style="height:35px; width:190px;">
+                    <option default value="0">None</option>
+                    <option th:each="brand : ${brands}"
+                            th:text="${brand.name}"
+                            th:value="${brand.id}">
+                    </option>
+                </select>
+                <a href="/store/brand/add" class="btn btn-store" style="float:right">Add</a>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="leftControl">
-            <label th:for="name">Aisle</label>
-            <input class="form-control" th:field="*{aisle}" required/>
-        </div>
-        <div class="rightControl">
-            <label th:for="name">Expiration Date</label>
-            <input class="form-control" th:field="*{expirationDate}" required/>
-        </div>
-    </div>
+        <div class="form-group">
+            <div class="leftControl">
+                <label th:for="name">Quantity</label>
+                <input class="form-control" th:field="*{quantity}" required/>
+            </div>
+            <div class="rightControl">
+                <label th:for="name">Price</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="padding: 0px 7px;font-size: 18px;">$</span>
+                        <input class="form-control" th:field="*{price}" aria-label="Amount (to the nearest dollar)" required/>
+                    </div>
 
-
-    <input type="submit" class="btn btn-primary" value="Add Item" />
-    <a href="/store/list" style="margin-left:20px">Cancel</a>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="leftControl">
+                <label th:for="name">Aisle</label>
+                <input class="form-control" th:field="*{aisle}"/>
+            </div>
+            <div class="rightControl">
+                <label th:for="name">Expiration Date</label>
+                <input class="form-control" th:field="*{expirationDate}"/>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-store" value="Add Item" />
+        <a href="/store/list" class="store-color" style="margin-left:20px;">Cancel</a>
+    </div>
+    <div style="width:40%; float:right">
+        <div th:replace="imagefragments :: imageSelector"></div>
+    </div>
 </form>
+
 </body>
+<div th:replace="footer :: copyright"></div>
 </html>
