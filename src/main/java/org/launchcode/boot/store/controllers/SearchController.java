@@ -62,8 +62,7 @@ public class SearchController {
             }
         }
         model.addAttribute("items", matchingItems);//ternary if condition (if thr is no search keyword then list all items on display)
-//        model.addAttribute("user", session.getAttribute("user"));
-//        model.addAttribute("store", session.getAttribute("store"));
+
         model.addAttribute("keywords", session.getAttribute("keywords"));
         System.out.println("Before returning to item cards");
 //        return new SearchResponse(matchingItems, keywords);

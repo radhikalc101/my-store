@@ -68,6 +68,7 @@ public class ItemController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processOfAddItemForm(@ModelAttribute @Valid Item item, Errors errors,
                                        @RequestParam int categoryId, @RequestParam int brandId, @RequestParam int imageId, Model model, HttpSession session){
+
         if(errors.hasErrors()){
             model.addAttribute("categories",categoryDao.findAll());
             model.addAttribute("brands",brandDao.findAll());
