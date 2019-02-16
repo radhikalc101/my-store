@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -21,10 +22,13 @@ public class BrandController  {
     private BrandDao brandDao;
 
     @GetMapping(value = "add")
-    public String addBrandForm(Model model){
-        model.addAttribute("brand",new Brand());// created new Brand object
-        model.addAttribute("brands",brandDao.findAll());// get all the brand names for DB
-        return "store/add_brand";
+    public String addBrandForm(Model model, HttpSession session){
+        if(session.getAttribute("user")!= null){
+            model.addAttribute("brand",new Brand());// created new Brand object
+            model.addAttribute("brands",brandDao.findAll());// get all the brand names for DB
+            return "store/add_brand";
+        }
+        return "redirect:/store/login";
     }
     @PostMapping(value = "add")
     public String processBrandFrom(@ModelAttribute @Valid Brand brandName, Errors errors, Model model){

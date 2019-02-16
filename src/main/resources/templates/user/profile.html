@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://>www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body class="container" style="font-family: Arial, Helvetica, sans-serif;">
+<nav th:replace="fragments :: navigation"></nav>
+    <div style="display:flex;">
+        <!--<div class="navbar1" style="float:left;">-->
+        <div class="flip-box">
+            <div class="flip-box-inner">
+                <div class="flip-box-front">
+                    <table class="storeDetails" style="text-aline:center;">
+                        <tr>
+                            <h4>Store Details:</h4>
+                        </tr>
+                        <tr><td>License:<span th:text="${store.storeLicense}"></span></td></tr>
+                        <tr><td><span>Address:</span></td></tr>
+                        <tr>
+                            <td>
+                                <span th:text="${store.storeAddress.addressLine1}"/>
+                                <span th:text="${store.storeAddress.addressLine2}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span th:text="${store.storeAddress.city}"/>
+                                <span th:text="${store.storeAddress.state}" style="margin-left:10px;"/>
+                                <span th:text="${store.storeAddress.zipcode}" style="margin-left:10px;"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="flip-box-back">
+                    <table class="ownerDetails" style="text-aline:center;">
+                        <tr>
+                            <th>Owner Details:</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                Name: <span th:text="${store.ownerAccountInfo.firstName}"></span>
+                                <span th:text="${store.ownerAccountInfo.lastName}" style="margin-left:10px;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <a href="/store/user/profile/edit"><td> Email: <span th:text="${store.ownerAccountInfo.email}"/></td></a>
+                        </tr>
+                        <tr>
+                            <td>Ph: <span th:text="${store.ownerAccountInfo.phoneNumber}"/></td>
+                        </tr>
+                        <tr><td><span>Address:</span></td></tr>
+                        <tr>
+                            <td>
+                                <span th:text="${store.ownerAccountInfo.ownerAddress.addressLine1}"></span>
+                                <span style="margin-left:8px;" th:text="${store.ownerAccountInfo.ownerAddress.addressLine2}"></span>
+                            </td>
+                        </tr>
+                        <td>
+                            <span th:text="${store.ownerAccountInfo.ownerAddress.city}"></span>
+                            <span th:text="${store.ownerAccountInfo.ownerAddress.state}"></span>
+                            <span style="margin-left:8px;" th:text="${store.ownerAccountInfo.ownerAddress.zipcode}"></span>
+                        </td>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></nav>
+</body>
+</html>

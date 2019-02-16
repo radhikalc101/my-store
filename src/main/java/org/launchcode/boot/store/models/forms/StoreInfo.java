@@ -5,11 +5,12 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity //This tells Hibernate to make a table out of this class
+@SequenceGenerator(name="storeSeq", initialValue=1, allocationSize=100)
 public class StoreInfo {
     // fields
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "storeSeq")
     private int id;
 
     @NotNull
