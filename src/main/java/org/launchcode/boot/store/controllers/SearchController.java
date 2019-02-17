@@ -1,9 +1,8 @@
 package org.launchcode.boot.store.controllers;
 
-import org.launchcode.boot.store.models.SearchResponse;
-import org.launchcode.boot.store.models.data.ItemDao;
-import org.launchcode.boot.store.models.forms.Item;
-import org.launchcode.boot.store.models.forms.StoreInfo;
+import org.launchcode.boot.store.models.Item;
+import org.launchcode.boot.store.models.StoreInfo;
+import org.launchcode.boot.store.services.StoreRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +17,8 @@ import java.util.List;
 public class SearchController {
 
     @Autowired
-    private ItemDao itemDao;
+    private StoreRestService restService;
+
 
     @RequestMapping(value = "search/{keyword}", method = RequestMethod.GET)
     public String findByKeyword(Model model, @PathVariable String keyword, HttpSession session){
@@ -50,7 +50,7 @@ public class SearchController {
 
     private String search(List<String> keywords, Model model, HttpSession session){
         StoreInfo storeInfo = (StoreInfo) session.getAttribute("store");
-        Iterable<Item> items = itemDao.findByStoreInfo(storeInfo);
+        List<Item> items = restService.findItemsByStore(storeInfo.getId());
         List<Item> matchingItems = new ArrayList<>();
         for (Item item : items) {
             if (isKeywordExist(item.getName(), keywords)) {
@@ -64,8 +64,6 @@ public class SearchController {
         model.addAttribute("items", matchingItems);//ternary if condition (if thr is no search keyword then list all items on display)
 
         model.addAttribute("keywords", session.getAttribute("keywords"));
-        System.out.println("Before returning to item cards");
-//        return new SearchResponse(matchingItems, keywords);
         return "store/cards :: itemCards";
     }
 

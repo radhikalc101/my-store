@@ -15,7 +15,7 @@ function uploadSingleFile(file) {
     formData.append("file", file);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/store/uploadFile");
+    xhr.open("POST", "/store/rest/uploadFile");
 
     xhr.onload = function() {
         console.log(xhr.responseText);
@@ -41,7 +41,7 @@ function uploadMultipleFiles(files) {
     }
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/store/uploadMultipleFiles");
+    xhr.open("POST", "/store/rest/uploadMultipleFiles");
 
     xhr.onload = function() {
         console.log(xhr.responseText);

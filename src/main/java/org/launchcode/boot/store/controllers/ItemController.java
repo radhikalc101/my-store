@@ -1,14 +1,9 @@
 package org.launchcode.boot.store.controllers;
 
-import org.launchcode.boot.store.models.data.BrandDao;
-import org.launchcode.boot.store.models.data.CategoryDao;
-import org.launchcode.boot.store.models.data.DBFileDao;
-import org.launchcode.boot.store.models.data.ItemDao;
-import org.launchcode.boot.store.models.forms.Brand;
-import org.launchcode.boot.store.models.forms.Category;
-import org.launchcode.boot.store.models.forms.DBFile;
-import org.launchcode.boot.store.models.forms.Item;
-import org.launchcode.boot.store.models.forms.StoreInfo;
+import org.launchcode.boot.store.models.*;
+import org.launchcode.boot.store.repositories.ItemRepository;
+import org.launchcode.boot.store.models.ImageFile;
+import org.launchcode.boot.store.services.StoreRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 
 @Controller
@@ -28,24 +21,18 @@ import java.nio.file.Files;
 public class ItemController {
 
     @Autowired
-    private ItemDao itemDao;
+    private ItemRepository itemRepository;
 
     @Autowired
-    private CategoryDao categoryDao;
-
-    @Autowired
-    private BrandDao brandDao;
-
-    @Autowired
-    private DBFileDao fileDao;
+    private StoreRestService restService;
 
     @RequestMapping(value = "/imageDisplay", method = RequestMethod.GET)
     public void showImage(@RequestParam("id") Integer imageId, HttpServletResponse response) {
         if(imageId != 0) {
-            DBFile image = fileDao.findById(imageId).get();
+            ImageFile imageFile = restService.getImageFile(imageId);
             response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
             try {
-                response.getOutputStream().write(image.getData());
+                response.getOutputStream().write(imageFile.getData());
                 response.getOutputStream().close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -56,10 +43,10 @@ public class ItemController {
     public String addItemForm(Model model,HttpSession session){
         if(session.getAttribute("user")!= null){
             Item item = new Item();
-            item.setImage(new DBFile());
+            item.setImageFile(new ImageFile());
             model.addAttribute(item);
-            model.addAttribute("categories",categoryDao.findAll());
-            model.addAttribute("brands",brandDao.findAll());
+            model.addAttribute("categories", restService.getAllCategories());
+            model.addAttribute("brands", restService.getAllBrands());
             return "store/add_item";
         }
         return "redirect:/store/login";
@@ -70,25 +57,25 @@ public class ItemController {
                                        @RequestParam int categoryId, @RequestParam int brandId, @RequestParam int imageId, Model model, HttpSession session){
 
         if(errors.hasErrors()){
-            model.addAttribute("categories",categoryDao.findAll());
-            model.addAttribute("brands",brandDao.findAll());
+            model.addAttribute("categories", restService.getAllCategories());
+            model.addAttribute("brands", restService.getAllBrands());
             return "store/add_item";
         }
         if(categoryId != 0) {
-            Category selectedCatName = categoryDao.findById(categoryId).get();
+            Category selectedCatName = restService.findCategoryById(categoryId);
             item.setCategory(selectedCatName);
         }
         if(brandId != 0) {
-            Brand selectedBrandName = brandDao.findById(brandId).get();
+            Brand selectedBrandName = restService.findBrandById(brandId);
             item.setBrand(selectedBrandName);
         }
         if(imageId != 0) {
-            DBFile image = fileDao.findById(imageId).get();
-            item.setImage(image);
+            ImageFile imageFile = restService.getImageFile(imageId);
+            item.setImageFile(imageFile);
         }
         StoreInfo storeInfo = (StoreInfo) session.getAttribute("store");
         item.setStoreInfo(storeInfo);
-        itemDao.save(item);
+        restService.saveItem(item);
         return "redirect:/store/list";
     }
 
@@ -96,10 +83,10 @@ public class ItemController {
 
     @GetMapping(value = "edit/{id}")
     public String editFormDisplay(Model model, @PathVariable int id){
-        Item itemObject = itemDao.findById(id).get();
+        Item itemObject = restService.findItemById(id);
         model.addAttribute("item",itemObject);
-        model.addAttribute("categories",categoryDao.findAll());
-        model.addAttribute("brands",brandDao.findAll());
+        model.addAttribute("categories", restService.getAllCategories());
+        model.addAttribute("brands", restService.getAllBrands());
         return "store/edit_item";
 
     }
@@ -109,26 +96,21 @@ public class ItemController {
         if(errors.hasErrors()){
             return "store/edit_item";
         }
-
-        DBFile image = fileDao.findById(imageId).get();
-        item.setImage(image);
+        ImageFile imageFile = restService.getImageFile(imageId);
+        item.setImageFile(imageFile);
 
         StoreInfo storeInfo = (StoreInfo) session.getAttribute("store");
         item.setStoreInfo(storeInfo);
-        itemDao.save(item);
-
+        restService.saveItem(item);
         return "redirect:/store/list";
     }
     // deleting the item form list of items using itemId
     @RequestMapping(value = "delete/{itemId}", method = RequestMethod.GET)
-    public String deleteItem(Model model,@PathVariable int itemId, HttpSession session){
-        itemDao.deleteById(itemId);
+    public String deleteItem(Model model,@PathVariable int itemId, HttpSession session){ ;
+        restService.deleteItemById(itemId);
         if(session.getAttribute("email") != null && session.getAttribute("store") != null) {
             StoreInfo storeInfo = (StoreInfo) session.getAttribute("store");
-            model.addAttribute("items",itemDao.findByStoreInfo(storeInfo));
-//            model.addAttribute("user",session.getAttribute("user") );
-//            model.addAttribute("store", storeInfo);
-//            model.addAttribute("keyword", "");
+            model.addAttribute("items", restService.findItemsByStore(storeInfo.getId()));
             model.addAttribute("keywords", session.getAttribute("keywords"));
             return "store/cards :: itemCards";
         } else {

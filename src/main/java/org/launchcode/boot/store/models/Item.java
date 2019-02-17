@@ -1,4 +1,4 @@
-package org.launchcode.boot.store.models.forms;
+package org.launchcode.boot.store.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -42,11 +42,11 @@ public class Item {
     private String expirationDate;
 
     @OneToOne
-    private DBFile image;
+    private ImageFile imageFile;
 
     public Item(){}
     public Item(String name, String description, int quantity, float price, Category category, Brand brand,
-                int aisle,String expirationDate, StoreInfo storeInfo, DBFile image){
+                int aisle,String expirationDate, StoreInfo storeInfo, ImageFile imageFile){
         this.name = name;
         this.description = description;
         this.price = price;
@@ -57,7 +57,7 @@ public class Item {
         this.expirationDate = expirationDate;
         this.isPublished = false;
         this.storeInfo = storeInfo;
-        this.image = image;
+        this.imageFile = imageFile;
 
     }
 
@@ -148,12 +148,12 @@ public class Item {
     public void setStoreInfo(StoreInfo storeInfo) {
         this.storeInfo = storeInfo;
     }
-    public DBFile getImage() {
-        return image;
+    public ImageFile getImageFile() {
+        return imageFile;
     }
 
-    public void setImage(DBFile image) {
-        this.image = image;
+    public void setImageFile(ImageFile imageFile) {
+        this.imageFile = imageFile;
     }
     @Override
     public String toString() {
@@ -167,7 +167,7 @@ public class Item {
                 ", brand=" + brand +
                 ", isPublished=" + isPublished +
                 ", store=" + storeInfo.getName() +
-                ", imageId=" + image.getId() +
+                ", imageId=" + (imageFile != null ? imageFile.getId() : "No Image") +
                 '}';
     }
 }

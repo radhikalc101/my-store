@@ -1,4 +1,4 @@
-package org.launchcode.boot.store.models.forms;
+package org.launchcode.boot.store.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,10 +17,6 @@ public class Category {
     @NotNull
     @Size(min=1,max=20)
     private String name;
-
-    @OneToMany
-    @JoinColumn(name="category_id")
-    private List<Item> items = new ArrayList<>();
 
     // default and with field constructor
     public Category(){}
@@ -43,20 +39,12 @@ public class Category {
         this.name = name;
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
 
     @Override
     public String toString() {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", items=" + items +
                 '}';
     }
 }

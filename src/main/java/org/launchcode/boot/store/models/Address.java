@@ -1,4 +1,4 @@
-package org.launchcode.boot.store.models.forms;
+package org.launchcode.boot.store.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

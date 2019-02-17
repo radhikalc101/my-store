@@ -1,8 +1,7 @@
-package org.launchcode.boot.store.models.forms;
+package org.launchcode.boot.store.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +15,6 @@ public class Brand {
 
     @NotNull
     private String name;
-
-    @OneToMany
-    @JoinColumn(name="brand_id")
-    private List<Item> items = new ArrayList<>();
 
     public Brand(){}
     public Brand(String name){
@@ -40,20 +35,11 @@ public class Brand {
         this.name = name;
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
     @Override
     public String toString() {
         return "Brand{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", items=" + items +
                 '}';
     }
 }

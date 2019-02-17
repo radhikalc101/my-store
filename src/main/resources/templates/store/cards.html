@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <div class="cardLeftControl">
                             <a th:href="@{'/store/item/edit/'+${item.id}}" class="card-img-top">
-                                <img th:src="${item.image} ? @{'/store/item/imageDisplay?id=' + ${item.image.id}} : @{/images/no-image-available.jpg}" th:alt="${item.name}" style="width:145px;height:143px;margin:2px">`
+                                <img th:src="${item.imageFile} ? @{'/store/item/imageDisplay?id=' + ${item.imageFile.id}} : @{/images/no-image-available.jpg}" th:alt="${item.name}" style="width:145px;height:143px;margin:2px">`
                             </a>
                         </div>
                         <div class="cardRightControl" style="height: 150px">

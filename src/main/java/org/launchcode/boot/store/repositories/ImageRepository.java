@@ -1,6 +1,6 @@
-package org.launchcode.boot.store.models.data;
+package org.launchcode.boot.store.repositories;
 
-import org.launchcode.boot.store.models.forms.Category;
+import org.launchcode.boot.store.models.ImageFile;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +8,5 @@ import javax.transaction.Transactional;
 
 @Repository
 @Transactional
-public interface CategoryDao extends CrudRepository<Category, Integer> {
+public interface ImageRepository extends CrudRepository<ImageFile, Integer> {
 }

@@ -1,7 +1,7 @@
 package org.launchcode.boot.store.controllers;
 
-import org.launchcode.boot.store.models.data.BrandDao;
-import org.launchcode.boot.store.models.forms.Brand;
+import org.launchcode.boot.store.models.Brand;
+import org.launchcode.boot.store.services.StoreRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +19,14 @@ import javax.validation.Valid;
 public class BrandController  {
 
     @Autowired
-    private BrandDao brandDao;
+    private StoreRestService restService;
 
     @GetMapping(value = "add")
     public String addBrandForm(Model model, HttpSession session){
         if(session.getAttribute("user")!= null){
             model.addAttribute("brand",new Brand());// created new Brand object
-            model.addAttribute("brands",brandDao.findAll());// get all the brand names for DB
+            Iterable<Brand> brands = restService.getAllBrands();
+            model.addAttribute("brands", brands);// get all the brand names for DB
             return "store/add_brand";
         }
         return "redirect:/store/login";
@@ -35,7 +36,8 @@ public class BrandController  {
         if(errors.hasErrors()){
             return "store/add_brand";// giving the path of the html form so add_brand.html file is in the store folder
         }
-        brandDao.save(brandName);// save the given brand name in the DB
+        restService.saveBrand(brandName);
+        //brandRepository.save(brandName);// save the given brand name in the DB
         return "redirect:/store/brand/add";// redirecting to requests first it will go to top level request then come to the add request.
     }
 }

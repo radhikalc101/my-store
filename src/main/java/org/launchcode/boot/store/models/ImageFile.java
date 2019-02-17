@@ -1,4 +1,4 @@
-package org.launchcode.boot.store.models.forms;
+package org.launchcode.boot.store.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "files")
 @SequenceGenerator(name="imageSeq", initialValue=1, allocationSize=100)
-public class DBFile {
+public class ImageFile {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "imageSeq")
     private int id;
@@ -21,11 +21,11 @@ public class DBFile {
     @Lob
     private byte[] data;
 
-    public DBFile() {
+    public ImageFile() {
 
     }
 
-    public DBFile(String fileName, String fileType, String userId, byte[] data) {
+    public ImageFile(String fileName, String fileType, String userId, byte[] data) {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;

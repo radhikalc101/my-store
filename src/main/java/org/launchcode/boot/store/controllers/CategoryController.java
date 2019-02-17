@@ -1,7 +1,7 @@
 package org.launchcode.boot.store.controllers;
 
-import org.launchcode.boot.store.models.data.CategoryDao;
-import org.launchcode.boot.store.models.forms.Category;
+import org.launchcode.boot.store.models.Category;
+import org.launchcode.boot.store.services.StoreRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,24 +19,24 @@ import javax.validation.Valid;
 public class CategoryController {
 
     @Autowired
-    private CategoryDao categoryDao;
+    private StoreRestService restService;
 
     @GetMapping(value = "add")
     public String addCategoryForm(Model model, HttpSession session){
         if(session.getAttribute("user")!= null){
             model.addAttribute("category", new Category());
-            model.addAttribute("categories",categoryDao.findAll());
+            model.addAttribute("categories", restService.getAllCategories());
             return "category/add_category";
         }
 
         return "redirect:/store/login";
     }
     @PostMapping(value = "add")
-    public String processAddCategoryForm(@ModelAttribute @Valid Category category, Errors errors, Model model){
+    public String processAddCategoryForm(@ModelAttribute @Valid Category category, Errors errors){
         if(errors.hasErrors()){
             return "category/add_category";
         }
-        categoryDao.save(category);
+        restService.saveCategory(category);
         return "redirect:/store/category/add";
     }
 

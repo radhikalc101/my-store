@@ -1,7 +1,5 @@
 package org.launchcode.boot.store.models;
 
-import org.launchcode.boot.store.models.forms.Item;
-
 import java.util.List;
 
 public class SearchResponse {

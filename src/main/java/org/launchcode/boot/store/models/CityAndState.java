@@ -1,4 +1,4 @@
-package org.launchcode.boot.store.models.forms;
+package org.launchcode.boot.store.models;
 
 public class CityAndState {
     private String city;

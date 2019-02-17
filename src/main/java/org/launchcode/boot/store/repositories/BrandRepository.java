@@ -1,6 +1,6 @@
-package org.launchcode.boot.store.models.data;
+package org.launchcode.boot.store.repositories;
 
-import org.launchcode.boot.store.models.forms.Brand;
+import org.launchcode.boot.store.models.Brand;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +8,5 @@ import javax.transaction.Transactional;
 
 @Transactional
 @Repository
-public interface BrandDao extends CrudRepository<Brand, Integer>{
+public interface BrandRepository extends CrudRepository<Brand, Integer>{
 }

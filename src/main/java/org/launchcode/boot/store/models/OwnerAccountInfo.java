@@ -1,9 +1,11 @@
-package org.launchcode.boot.store.models.forms;
+package org.launchcode.boot.store.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @SequenceGenerator(name="acctSeq", initialValue=1, allocationSize=100)
@@ -181,6 +183,12 @@ public class OwnerAccountInfo {
 
     public void setOwnerAddress(Address ownerAddress) {
         this.ownerAddress = ownerAddress;
+    }
+
+    public List<String> getRoles() {
+        ArrayList<String> roles = new ArrayList<>();
+        roles.add("ROLE_USER");
+        return roles;
     }
 
     @Override

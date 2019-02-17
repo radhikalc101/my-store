@@ -5,7 +5,7 @@ function uploadMultipleFiles(files) {
     }
 
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/store/uploadMultipleFiles");
+    xhr.open("POST", "/store/rest/uploadMultipleFiles");
 
     xhr.onload = function() {
 

@@ -7,10 +7,10 @@
 <body>
     <div th:fragment="imageSelector" style="margin-bottom:30px">
         <div>
-            <img id="itemImage" th:src="${item.image} and ${item.image.id} ? @{'/store/item/imageDisplay?id=' + ${item.image.id}} : @{'/store/item/imageDisplay?id=0'}" alt="No Image Selected" style="width:93%;height:30%;"/>
-            <input type="hidden" id="imageId" name="imageId" th:value="${item.image} and ${item.image.id} ? ${item.image.id} : 0"/>
+            <img id="itemImage" th:src="${item.imageFile} and ${item.imageFile.id} ? @{'/store/item/imageDisplay?id=' + ${item.imageFile.id}} : @{'/store/item/imageDisplay?id=0'}" alt="No Image Selected" style="width:93%;height:30%;"/>
+            <input type="hidden" id="imageId" name="imageId" th:value="${item.imageFile} and ${item.imageFile.id} ? ${item.imageFile.id} : 0"/>
         </div>
-        <button type="button" class="btn btn-store" th:text="${item.image} and ${item.image.id} ? 'Update Image' : 'Select Image'" data-toggle="modal" data-target="#imageViewer" data-whatever="@mdo" style="margin-top:20px">Update Image</button>
+        <button type="button" class="btn btn-store" th:text="${item.imageFile} and ${item.imageFile.id} ? 'Update Image' : 'Select Image'" data-toggle="modal" data-target="#imageViewer" data-whatever="@mdo" style="margin-top:20px">Update Image</button>
 
         <div class="modal fade" id="imageViewer" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -37,10 +37,10 @@
                 $(document).ready(function(){
                     $('#imageViewer').on('show.bs.modal', function (event) {
                       var modal = $(this)
-                      $.get( "/store/loadImages")
+                      $.get( "/store/rest/loadImages")
                       .done(function( images ) {
-                         let imageTags = images.map((image) => {
-                            return "<label><input type='radio' name='selectedImage' value='"+image.id+"'/><img style='margin:3px;height:100px;width:100px' src='/store/item/imageDisplay?id=" + image.id +"'/></label>";
+                         let imageTags = images.map((imageFile) => {
+                            return "<label><input type='radio' name='selectedImage' value='"+imageFile.id+"'/><img style='margin:3px;height:100px;width:100px' src='/store/item/imageDisplay?id=" + imageFile.id +"'/></label>";
                          });
                          modal.find('.modal-body')[0].innerHTML = imageTags.join('')
                       }).fail(function(e) {
