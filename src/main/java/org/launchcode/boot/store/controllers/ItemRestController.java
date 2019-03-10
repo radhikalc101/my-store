@@ -18,7 +18,6 @@ public class ItemRestController {
 
     @RequestMapping(value = "publish/{id}", method = RequestMethod.GET)
     public int publishItem(Model model, @PathVariable int id){
-        System.out.println(id);
         Item item = itemDao.findById(id).get();
         item.setPublished(!item.isPublished());
         itemDao.save(item);

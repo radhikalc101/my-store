@@ -19,10 +19,10 @@ public class OwnerAccountInfo {
     private String lastName;
 
     @NotNull
-    @Size(min=1,max=20)
+    @Size(min=2,max=25)
     private String email;
     @NotNull
-    @Size(min=1,max=20, message = "Please enter the valid password")
+    @Size(min=2,max=20, message = "Please enter the valid password")
     private String password;
     @NotNull
     private String dateOfBirth;

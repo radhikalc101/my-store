@@ -7,14 +7,15 @@
 </head>
 <body class="container" style="font-family: Arial, Helvetica, sans-serif;">
 <nav th:replace="fragments :: navigation"></nav>
-    <div style="display:flex;">
+    <div style="display:flex;margin-left:10%">
         <!--<div class="navbar1" style="float:left;">-->
-        <div class="flip-box">
-            <div class="flip-box-inner">
-                <div class="flip-box-front">
-                    <table class="storeDetails" style="text-aline:center;">
+        <!--<div class="flip-box">-->
+            <!--<div class="flip-box-inner">-->
+                <!--<div class="flip-box-front">-->
+                <div style="border:1px solid; padding:20px; background-color:#ede8f4">
+                    <table>
                         <tr>
-                            <h4>Store Details:</h4>
+                            <th>Store Details:</th>
                         </tr>
                         <tr><td>License:<span th:text="${store.storeLicense}"></span></td></tr>
                         <tr><td><span>Address:</span></td></tr>
@@ -33,8 +34,10 @@
                         </tr>
                     </table>
                 </div>
-                <div class="flip-box-back">
-                    <table class="ownerDetails" style="text-aline:center;">
+                <!--</div>-->
+                <!--<div class="flip-box-back">-->
+        <div style="border:1px solid; padding:20px;margin-left:10%;background-color:#ede8f4">
+                    <table>
                         <tr>
                             <th>Owner Details:</th>
                         </tr>
@@ -63,10 +66,13 @@
                             <span style="margin-left:8px;" th:text="${store.ownerAccountInfo.ownerAddress.zipcode}"></span>
                         </td>
                     </table>
+
                 </div>
-            </div>
-        </div>
-    </div>
-</div></nav>
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
+
 </body>
+<div th:replace="footer :: copyright"></div>
 </html>
