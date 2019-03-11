@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -37,5 +34,13 @@ public class BrandController  {
         }
         brandDao.save(brandName);// save the given brand name in the DB
         return "redirect:/store/brand/add";// redirecting to requests first it will go to top level request then come to the add request.
+    }
+
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    public String processDeleteBrand(@RequestParam int[] brandIds ){
+        for(int brandId : brandIds){
+            brandDao.deleteById(brandId);
+        }
+        return "redirect:/store/brand/add";
     }
 }

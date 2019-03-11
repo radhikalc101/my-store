@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -37,6 +34,14 @@ public class CategoryController {
             return "category/add_category";
         }
         categoryDao.save(category);
+        return "redirect:/store/category/add";
+    }
+
+    @RequestMapping(value = "delete",method = RequestMethod.POST)
+    public String catDeleteFormProcess(@RequestParam int[] catIds){
+        for(int catId : catIds){
+            categoryDao.deleteById(catId);
+        }
         return "redirect:/store/category/add";
     }
 

@@ -1,15 +1,10 @@
 package org.launchcode.boot.store.controllers;
 
-//import org.launchcode.boot.store.models.OwnerAccountInfo;
-//import org.launchcode.boot.store.models.StoreInfo;
 import org.launchcode.boot.store.models.data.OwnerAccountInfoDao;
 import org.launchcode.boot.store.models.forms.OwnerAccountInfo;
 import org.launchcode.boot.store.models.forms.StoreInfo;
-//import org.launchcode.boot.store.repositories.OwnerAccountInfoRepository;
 import org.launchcode.boot.store.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.mail.javamail.JavaMailSender;
-//import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +16,6 @@ import javax.mail.internet.*;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.Properties;
 
 import org.springframework.mail.SimpleMailMessage;
 

@@ -306,3 +306,12 @@ th {
     padding: 4px;
     font-size: 14px;
  }
+ .custom-checkbox .custom-control-input[type="checkbox"]:checked~.custom-control-label::before {
+     background-color: #523482 !important;;
+ }
+ /*
+ .custom-control-input:checked~.custom-control-label::before {
+     color: #fff;
+     background-color: #523482 !important;
+ }
+ */

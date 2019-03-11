@@ -14,16 +14,23 @@
         <span th:errors="*{name}" class="error"></span>
     </div>
     <input type="submit" class="btn btn-store" value="Add"/>
+
     <a href="/store/list" class="store-color" style="margin-left:20px;">Cancel</a>
-</form>
-<div style="margin-top:15px;">
     <p th:unless="${categories} and ${categories.size()}">No Category Added</p>
-    <ul >
-        <li th:each="category : ${categories}">
-            <label th:text="${category.name}"></label>
-        </li>
-    </ul>
-</div>
+</form>
+<form method="post" action="/store/category/delete">
+
+    <div style="margin-top:15px;" >
+
+        <div th:each="category : ${categories}" class="custom-control custom-checkbox">
+            <input class="custom-control-input" type="checkbox" th:id="${category.id}" name="catIds" th:value="${category.id}">
+            <label class="custom-control-label" th:for="${category.id}" th:text="${category.name}"></label>
+        </div>
+    </div>
+
+    <input type="submit" class="btn btn-store" value="Delete">
+</form>
+
 
 </body>
 <div th:replace="footer :: copyright"></div>
