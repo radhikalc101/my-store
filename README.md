@@ -11,10 +11,13 @@ Later on I am planing to do a clint app for mobile consumers for online purchase
 
 ### Features
 - User Login/Sign Up:Store owner can register and login to this app
-- Add/Edit/View Items: Store owner can create,edit view his inventory by using required fields(name,description,category,brand,price and quantity).
-- Add/Edit/View Categories: Store owner can create,edit,view store item categories.
-- Add/Edit/View Brands: Store owner can create,edit,view store item brands.
-- Search/Filter items by Name,Category,Brand
+- Add/Edit/View  Profile: Store owner can create, edit, view his profile.
+- Add/Edit/delete/View Items: Store owner can create,edit,delete, view his inventory by using required fields(name,description,category,brand,price and quantity).
+- Add/Edit/delete/View Categories: Store owner can create,edit,delete, view store item categories.
+- Add/Edit/delete/View Brands: Store owner can create,edit,delete, view store item brands.
+- Add/Edit Images: Store owner can upload and edit the image for each item.
+- Search/Filter items by Name,Category,Brand.
+- Forgot Password: Store owners will get the forgot password through email from Admin.
 
 ### Technologies
 - Spring boot
@@ -48,4 +51,10 @@ Later on I am planing to do a clint app for mobile consumers for online purchase
 #### Project Tracker
 
 [User Stories (Pivotal Tracker)](https://www.pivotaltracker.com/projects/2238724)
+
+##Project Presentation
+[My-Store-Presentation](./My-Store-Presentation-pdf.pdf)
+
+## Project Site 
+[My-Store](https://my-store.cfapps.io/store) 
 
