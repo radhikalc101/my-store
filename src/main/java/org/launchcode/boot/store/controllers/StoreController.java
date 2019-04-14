@@ -47,6 +47,13 @@ public class StoreController {
 
 //    private State[] states;
 
+    @RequestMapping(value = "maps", method =RequestMethod.GET)
+        public String mapsDisplay (Model model){
+        return "store/google_maps";
+
+        }
+
+
     @GetMapping(value = "upload")
     public String uploadImage(Model model){
         return "upload/images";
@@ -71,7 +78,6 @@ public class StoreController {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String processLoginForm(@RequestParam String email, @RequestParam String password, Model model, HttpSession session){// here the given param names should match in the form in the lable tag 'name' field
         OwnerAccountInfo ownerAccountInfo = ownerAccountInfoDao.findByEmail(email);//here first we are getting the email from the DB
-        model.addAttribute("errorMessage","");
 //        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 //        String hashedPassword = passwordEncoder.encode(password);
         if(ownerAccountInfo != null && password.equals(ownerAccountInfo.getPassword())){ // here checking the given password matches to the pwd in the DB
@@ -105,7 +111,6 @@ public class StoreController {
 
         Address storeAddress = new Address();
         store.setStoreAddress(storeAddress);// created new store object and new address object for the store and setting the new address object to the store
-
         OwnerAccountInfo owner = new OwnerAccountInfo();
         Address ownerAddress = new Address();
         owner.setOwnerAddress(ownerAddress);// created new owner object and new address object for the owner and setting the new address object to the owner
@@ -147,8 +152,9 @@ public class StoreController {
             store.getOwnerAccountInfo().setUpdatedDateTime(currentDateTime);
             store.getOwnerAccountInfo().getOwnerAddress().setCreationDateTime(currentDateTime);// for this when the owner address was created to know first we get the ownerAcInfo obejct for that object we need address object so we get that too and finally we set the time to the store object
             store.getOwnerAccountInfo().getOwnerAddress().setUpdatedDateTime(currentDateTime);
-//            System.out.println(store);
+           System.out.println(store.getStoreAddress());
             addressDao.save(store.getStoreAddress());// witch ever object has "no" dependence objects that one we should add to the database first here they have the unique ids,saving the store address in the address table first
+            System.out.println(store.getOwnerAccountInfo().getOwnerAddress());
             addressDao.save(store.getOwnerAccountInfo().getOwnerAddress());// here saving the owner address in the address table
             ownerAccountInfoDao.save(store.getOwnerAccountInfo());// saving the owneracinfo object in the table
             storeInfoDao.save(store);// saving the store object in the database table finally along with the child objects

@@ -315,3 +315,9 @@ th {
      background-color: #523482 !important;
  }
  */
+
+ #map{
+    height: 430px;
+    width: 87%;
+    margin-top: 20px;
+ }

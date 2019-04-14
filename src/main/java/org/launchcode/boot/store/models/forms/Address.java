@@ -31,11 +31,30 @@ public class Address {
 
     private Timestamp updatedDateTime;
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    private double latitude;
+    private double longitude;
+
     // empty constructor
     public Address(){}
 
     // constructor
-    public Address(String addressLine1,String addressLine2,String city,String state,int zipcode, Timestamp creationDateTime, Timestamp updatedDateTime){
+    public Address(String addressLine1,String addressLine2,String city,String state,int zipcode, Timestamp creationDateTime, Timestamp updatedDateTime,double latitude, double longitude){
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.city = city;
@@ -43,6 +62,8 @@ public class Address {
         this.zipcode = zipcode;
         this.creationDateTime = creationDateTime;
         this.updatedDateTime = updatedDateTime;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
     //getters
     public int getId(){ return id;}
@@ -81,12 +102,14 @@ public class Address {
         this.updatedDateTime = updatedDateTime;
     }
 
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("addressLine1:").append(addressLine1).append("addressLine2:").append(addressLine2)
-                .append("city:").append(city).append("state:").append(state).append("zipcode:").append(zipcode)
-                .append("country:").append(country).append("creationDateTime:").append(creationDateTime);
+        sb.append("addressLine1: ").append(addressLine1).append("\n").append("addressLine2:").append(addressLine2).append("\n")
+                .append("city:").append(city).append("\n").append("state:").append(state).append("\n").append("zipcode:").append(zipcode).append("\n")
+                .append("country:").append(country).append("\n").append("creationDateTime:").append(creationDateTime).append("\n").append("latitude").append(latitude).append("\n")
+                .append("longitude").append(longitude);
 
         return sb.toString();
 

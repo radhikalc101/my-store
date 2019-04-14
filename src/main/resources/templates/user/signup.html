@@ -72,6 +72,14 @@
             <label th:for="storeAddress">Country</label>
             <input class="form-control" th:field="*{storeAddress.country}"  disabled="disabled" />
         </div>
+        <div class="leftControl">
+            <label th:for="storeAddress">Latitude</label>
+            <input class="form-control" th:field="*{storeAddress.latitude}" required/>
+        </div>
+        <div class="rightControl">
+            <label th:for="storeAddress">Longitude</label>
+            <input class="form-control" th:field="*{storeAddress.longitude}" required/>
+        </div>
     </div>
     <hr/>
     <div class="form-group">
@@ -162,6 +170,14 @@
         <div class="rightControl">
             <label th:for="storeAddress">Country</label>
             <input class="form-control" th:field="*{ownerAccountInfo.ownerAddress.country}" disabled="disabled"/>
+        </div>
+        <div class="leftControl">
+            <label th:for="storeAddress">Latitude</label>
+            <input class="form-control" th:field="*{ownerAccountInfo.ownerAddress.latitude}" required/>
+        </div>
+        <div class="rightControl">
+            <label th:for="storeAddress">Longitude</label>
+            <input class="form-control" th:field="*{ownerAccountInfo.ownerAddress.longitude}" required/>
         </div>
     </div>
     <input type="submit" class="signup btn-store" value="Sign Up"/>

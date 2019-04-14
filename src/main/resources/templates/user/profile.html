@@ -72,7 +72,59 @@
         <!--</div>-->
     <!--</div>-->
 </div>
+<div id="map">
+    <script th:inline="javascript" >
+            function storeAddress(){
 
+                    const langLat = {lat:/*[[${store.storeAddress.latitude}]]*/, lng:/*[[${store.storeAddress.longitude}]]*/};
+                    const props = {coords:langLat, content: '<h4> Store: '+/*[[${store.name}]]*/+'</h4>' }
+                    console.log(langLat);
+                    console.log(props);
+                    const options = {zoom:11,center:langLat}
+                    const map = new google.maps.Map(document.getElementById('map'),options);
+
+                    initMap(props, map);
+
+                    const langLat1 = {lat:/*[[${store.ownerAccountInfo.ownerAddress.latitude}]]*/, lng:/*[[${store.ownerAccountInfo.ownerAddress.longitude}]]*/}
+                    const props1 = {coords:langLat1, content:'<h4> Owner: '+ /*[[${store.ownerAccountInfo.firstName}]]*/+'</h4>' }
+
+                    const options1 = {zoom:11,center:langLat1}
+                    <!--const ownerMap1 = new google.maps.Map(document.getElementById('ownerMap'),options1);-->
+
+                    initMap(props1, map);
+
+            }
+
+            function ownerAddress(){
+
+
+
+
+            }
+            function initMap(props, targetMap){
+                console.log('initMap');
+                var marker = new google.maps.Marker({
+                    position:props.coords,
+                    map:targetMap
+                });
+
+                <!--check content-->
+                if(props.content){
+                    var infoWindow = new google.maps.InfoWindow({
+                        content:props.content
+                    });
+
+                    marker.addListener('click',function(){
+                        infoWindow.open(targetMap, marker);
+                    });
+                }
+            }
+
+        </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkICQK4MNLd5Vah3dsVbXGJlwq8eeRXeY&callback=storeAddress">
+
+    </script>
+</div>
 </body>
 <div th:replace="footer :: copyright"></div>
 </html>

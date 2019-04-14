@@ -41,19 +41,23 @@ public class UserController {
 
     @RequestMapping(value = "forgotpwd", method = RequestMethod.GET)
     public String getForgotPwd(Model model){
-
+        model.addAttribute("errorMsg",null);
         return "user/forgotPassword";
     }
     @RequestMapping(value = "sendemail", method = RequestMethod.POST)
-    public String sendEmail(@RequestParam String email,Model model) throws AddressException, MessagingException, IOException {
+    public String sendEmail(Model model, @RequestParam String email) throws AddressException, MessagingException, IOException {
+        model.addAttribute("errorMsg","");
         if(email != null) {
             OwnerAccountInfo ownerAccountInfo = ownerAccountInfoRepository.findByEmail(email);
+            System.out.println(ownerAccountInfo);
             if(ownerAccountInfo != null){
                 sendSimpleMail(ownerAccountInfo);
                 return "redirect:/store/login";
             }
+            model.addAttribute("errorMsg","Please Enter Valid Email Address");
         }
-        return "redirect:/store/user/forgotpwd";
+
+        return "user/forgotPassword";
     }
 
 //    private void sendmail(OwnerAccountInfo ownerAccountInfo) throws AddressException, MessagingException, IOException {
